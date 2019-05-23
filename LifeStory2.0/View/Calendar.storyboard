@@ -13,7 +13,7 @@
         <!--Ib Calendar Data Source-->
         <scene sceneID="r2P-WM-9oD">
             <objects>
-                <viewController id="H30-6U-Cu9" customClass="CalendarViewController" customModule="LifeStory" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="H30-6U-Cu9" customClass="CalendarViewController" customModule="LifeStory2_0" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vBo-7D-wO6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -99,7 +99,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="dateCell" id="lPg-Uv-6fo" customClass="DateCell" customModule="LifeStory" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="dateCell" id="lPg-Uv-6fo" customClass="DateCell" customModule="LifeStory2_0" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -165,7 +165,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" red="0.65796747970000002" green="0.86775381949999997" blue="0.97250503300000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="eventCell" id="dq4-mu-1CT" customClass="EventTableViewCell" customModule="LifeStory" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="eventCell" id="dq4-mu-1CT" customClass="EventTableViewCell" customModule="LifeStory2_0" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dq4-mu-1CT" id="d8J-ju-9xC">
@@ -243,7 +243,7 @@
         <!--Add Event View Controller-->
         <scene sceneID="J3R-PR-IIl">
             <objects>
-                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="CcM-ke-aoj" customClass="AddEventViewController" customModule="LifeStory" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="CcM-ke-aoj" customClass="AddEventViewController" customModule="LifeStory2_0" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qT4-ky-hGT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -255,7 +255,6 @@
                                         <rect key="frame" x="8" y="8" width="274" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="6Sz-BJ-FEW"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="xHW-cc-j2C"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -430,9 +429,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="t3u-41-1SN" secondAttribute="trailing" constant="8" id="0As-nc-fOy"/>
                                     <constraint firstItem="t3u-41-1SN" firstAttribute="leading" secondItem="Z5M-ph-QkI" secondAttribute="leading" constant="8" id="6Ec-47-bzd"/>
-                                    <constraint firstItem="t3u-41-1SN" firstAttribute="top" secondItem="Z5M-ph-QkI" secondAttribute="top" constant="8" id="6QA-Rp-lfx"/>
                                     <constraint firstAttribute="trailing" secondItem="t3u-41-1SN" secondAttribute="trailing" constant="8" id="C8X-nX-drw"/>
                                     <constraint firstItem="Fph-dp-c6n" firstAttribute="top" secondItem="dgT-sR-oMm" secondAttribute="bottom" constant="8" id="GVe-KO-aRL"/>
                                     <constraint firstItem="Fph-dp-c6n" firstAttribute="centerX" secondItem="Z5M-ph-QkI" secondAttribute="centerX" id="Qfh-VQ-sPE"/>
@@ -443,7 +440,6 @@
                                     <constraint firstItem="t3u-41-1SN" firstAttribute="top" secondItem="Z5M-ph-QkI" secondAttribute="top" constant="8" id="Zeu-ji-jHv"/>
                                     <constraint firstAttribute="trailing" secondItem="5dV-Dy-MZg" secondAttribute="trailing" constant="10" id="dFx-uT-JOr"/>
                                     <constraint firstAttribute="bottom" secondItem="5dV-Dy-MZg" secondAttribute="bottom" constant="15" id="gYL-iG-pee"/>
-                                    <constraint firstItem="t3u-41-1SN" firstAttribute="leading" secondItem="Z5M-ph-QkI" secondAttribute="leading" constant="8" id="i3H-ko-AQI"/>
                                     <constraint firstAttribute="width" constant="290" id="j3w-Lx-4Wd"/>
                                     <constraint firstAttribute="bottom" secondItem="jDn-C5-gA0" secondAttribute="bottom" constant="15" id="jUN-2H-Lnt"/>
                                     <constraint firstItem="NWA-B2-FbH" firstAttribute="centerX" secondItem="Z5M-ph-QkI" secondAttribute="centerX" id="mag-nf-w9e"/>
@@ -489,7 +485,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NtJ-1K-6aP">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.65796747970000002" green="0.86775381949999997" blue="0.97250503300000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.6588235294117647" green="0.8666666666666667" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

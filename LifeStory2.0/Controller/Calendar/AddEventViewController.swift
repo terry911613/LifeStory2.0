@@ -42,7 +42,7 @@ class AddEventViewController: UIViewController {
         endTimeLabel.text = "選取時間"
     }
     func setFormatters(){
-        dateFormatter.dateFormat = "yyyy年MM月dd日"
+        dateFormatter.dateFormat = "yyyy年M月dd日"
         dateFormatter.locale = Locale(identifier: "zh_TW")
         dateFormatter.timeZone = TimeZone(identifier: "zh_TW")
         // 取上午或下午和小時跟分鐘（HH是24小時制，hh是12小時制）

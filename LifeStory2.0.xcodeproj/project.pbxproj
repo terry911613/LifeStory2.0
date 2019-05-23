@@ -13,7 +13,7 @@
 		44D9C7B72296500A00F2C617 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7B62296500A00F2C617 /* Assets.xcassets */; };
 		44D9C7BA2296500A00F2C617 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7B82296500A00F2C617 /* LaunchScreen.storyboard */; };
 		44D9C7C4229650E600F2C617 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C3229650E600F2C617 /* Calendar.storyboard */; };
-		44D9C7C62296510700F2C617 /* Expenditure.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C52296510700F2C617 /* Expenditure.storyboard */; };
+		44D9C7C62296510700F2C617 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C52296510700F2C617 /* Account.storyboard */; };
 		44D9C7C82296511100F2C617 /* Income.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C72296511100F2C617 /* Income.storyboard */; };
 		44D9C7CA2296511D00F2C617 /* Statistics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C92296511D00F2C617 /* Statistics.storyboard */; };
 		44D9C7CC2296512B00F2C617 /* Personal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7CB2296512B00F2C617 /* Personal.storyboard */; };
@@ -22,6 +22,11 @@
 		44D9C7D52296539400F2C617 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7D42296539400F2C617 /* EventTableViewCell.swift */; };
 		44D9C7D72296555300F2C617 /* GoogleService-Info (1).plist in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7D62296555200F2C617 /* GoogleService-Info (1).plist */; };
 		44D9C7D92296561200F2C617 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7D82296561200F2C617 /* GoogleService-Info.plist */; };
+		44D9C7DC229697A300F2C617 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7DB229697A300F2C617 /* AccountViewController.swift */; };
+		44D9C7DE229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7DD229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift */; };
+		44D9C7E022969A0C00F2C617 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7DF22969A0C00F2C617 /* DetailCollectionViewCell.swift */; };
+		44D9C7E42296ED4900F2C617 /* AddAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7E32296ED4900F2C617 /* AddAccountViewController.swift */; };
+		44D9C7E82296EE5800F2C617 /* TypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7E72296EE5800F2C617 /* TypeCollectionViewCell.swift */; };
 		FB5812E8EA3D793AC3BF500A /* Pods_LifeStory2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9E75E14AAAF3EBF957B948 /* Pods_LifeStory2_0.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,7 +41,7 @@
 		44D9C7B92296500A00F2C617 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		44D9C7BB2296500A00F2C617 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44D9C7C3229650E600F2C617 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
-		44D9C7C52296510700F2C617 /* Expenditure.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Expenditure.storyboard; sourceTree = "<group>"; };
+		44D9C7C52296510700F2C617 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		44D9C7C72296511100F2C617 /* Income.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Income.storyboard; sourceTree = "<group>"; };
 		44D9C7C92296511D00F2C617 /* Statistics.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Statistics.storyboard; sourceTree = "<group>"; };
 		44D9C7CB2296512B00F2C617 /* Personal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Personal.storyboard; sourceTree = "<group>"; };
@@ -45,6 +50,11 @@
 		44D9C7D42296539400F2C617 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		44D9C7D62296555200F2C617 /* GoogleService-Info (1).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info (1).plist"; sourceTree = "<group>"; };
 		44D9C7D82296561200F2C617 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		44D9C7DB229697A300F2C617 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		44D9C7DD229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		44D9C7DF22969A0C00F2C617 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
+		44D9C7E32296ED4900F2C617 /* AddAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountViewController.swift; sourceTree = "<group>"; };
+		44D9C7E72296EE5800F2C617 /* TypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		9F9E75E14AAAF3EBF957B948 /* Pods_LifeStory2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LifeStory2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -98,7 +108,7 @@
 			children = (
 				44D9C7B32296500800F2C617 /* Main.storyboard */,
 				44D9C7C3229650E600F2C617 /* Calendar.storyboard */,
-				44D9C7C52296510700F2C617 /* Expenditure.storyboard */,
+				44D9C7C52296510700F2C617 /* Account.storyboard */,
 				44D9C7C72296511100F2C617 /* Income.storyboard */,
 				44D9C7C92296511D00F2C617 /* Statistics.storyboard */,
 				44D9C7CB2296512B00F2C617 /* Personal.storyboard */,
@@ -110,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				44D9C7CD2296517C00F2C617 /* Calendar */,
+				44D9C7DA2296977600F2C617 /* Account */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -123,6 +134,34 @@
 				44D9C7D42296539400F2C617 /* EventTableViewCell.swift */,
 			);
 			path = Calendar;
+			sourceTree = "<group>";
+		};
+		44D9C7DA2296977600F2C617 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				44D9C7E52296EE2C00F2C617 /* show */,
+				44D9C7E62296EE3100F2C617 /* add */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		44D9C7E52296EE2C00F2C617 /* show */ = {
+			isa = PBXGroup;
+			children = (
+				44D9C7DB229697A300F2C617 /* AccountViewController.swift */,
+				44D9C7DD229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift */,
+				44D9C7DF22969A0C00F2C617 /* DetailCollectionViewCell.swift */,
+			);
+			path = show;
+			sourceTree = "<group>";
+		};
+		44D9C7E62296EE3100F2C617 /* add */ = {
+			isa = PBXGroup;
+			children = (
+				44D9C7E32296ED4900F2C617 /* AddAccountViewController.swift */,
+				44D9C7E72296EE5800F2C617 /* TypeCollectionViewCell.swift */,
+			);
+			path = add;
 			sourceTree = "<group>";
 		};
 		639FDE7E3749D1921D210128 /* Pods */ = {
@@ -204,7 +243,7 @@
 			files = (
 				44D9C7C4229650E600F2C617 /* Calendar.storyboard in Resources */,
 				44D9C7D72296555300F2C617 /* GoogleService-Info (1).plist in Resources */,
-				44D9C7C62296510700F2C617 /* Expenditure.storyboard in Resources */,
+				44D9C7C62296510700F2C617 /* Account.storyboard in Resources */,
 				44D9C7BA2296500A00F2C617 /* LaunchScreen.storyboard in Resources */,
 				44D9C7B72296500A00F2C617 /* Assets.xcassets in Resources */,
 				44D9C7B52296500800F2C617 /* Main.storyboard in Resources */,
@@ -289,8 +328,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44D9C7E82296EE5800F2C617 /* TypeCollectionViewCell.swift in Sources */,
 				44D9C7B22296500800F2C617 /* CalendarViewController.swift in Sources */,
+				44D9C7E42296ED4900F2C617 /* AddAccountViewController.swift in Sources */,
+				44D9C7DE229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift in Sources */,
+				44D9C7E022969A0C00F2C617 /* DetailCollectionViewCell.swift in Sources */,
 				44D9C7D32296537D00F2C617 /* AddEventViewController.swift in Sources */,
+				44D9C7DC229697A300F2C617 /* AccountViewController.swift in Sources */,
 				44D9C7D12296536200F2C617 /* DateCell.swift in Sources */,
 				44D9C7D52296539400F2C617 /* EventTableViewCell.swift in Sources */,
 				44D9C7B02296500800F2C617 /* AppDelegate.swift in Sources */,

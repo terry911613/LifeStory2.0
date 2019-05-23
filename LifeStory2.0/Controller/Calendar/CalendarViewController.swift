@@ -19,7 +19,6 @@ class CalendarViewController: UIViewController {
     
     var now = Date()
     var selectDate = Date()
-    var dateText = ""
     var selectDateText = ""
     let formatter: DateFormatter = DateFormatter()
     let timeFormatter = DateFormatter()
@@ -39,10 +38,8 @@ class CalendarViewController: UIViewController {
         calendarView.scrollingMode = .stopAtEachCalendarFrame
         calendarView.showsHorizontalScrollIndicator = false
         
-        dateLabel.text = "2019年01月"
-        
-        dateText = formatter.string(from: now)
-        selectDateText = dateText
+        selectDateText = formatter.string(from: now)
+        dateLabel.text = selectDateText
         
         timeFormatter.dateFormat = "a hh:mm"
         timeFormatter.locale = Locale(identifier: "zh_TW")
@@ -60,6 +57,7 @@ class CalendarViewController: UIViewController {
     func animateTableView(){
         let animations = [AnimationType.from(direction: .left, offset: 10.0)]
         UIView.animate(views: eventTableView.visibleCells, animations: animations, reversed: false, initialAlpha: 0.0, finalAlpha: 1.0, delay: 0, animationInterval: 1, duration: ViewAnimatorConfig.duration, completion: nil)
+        eventTableView.reloadData()
     }
 }
 
@@ -70,11 +68,11 @@ extension CalendarViewController: JTAppleCalendarViewDataSource, JTAppleCalendar
         /*
          這邊比viewdidload先執行，所以可以在這邊設定dateFormatter格式
          */
-        formatter.dateFormat = "yyyy年MM月dd日"
+        formatter.dateFormat = "yyyy年M月dd日"
         formatter.locale = Locale(identifier: "zh_TW")
         formatter.timeZone = TimeZone(identifier: "zh_TW")
         //  設定日曆起始日期和最終日期
-        let startDate = formatter.date(from: "2019年01月01日")!
+        let startDate = formatter.date(from: "2019年1月01日")!
         let endDate = formatter.date(from: "2030年12月31日")!
         return ConfigurationParameters(startDate: startDate,
                                        endDate: endDate,
@@ -100,7 +98,7 @@ extension CalendarViewController: JTAppleCalendarViewDataSource, JTAppleCalendar
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         //  讓 navigation 的 title 顯示現在的年跟月
         let formatter: DateFormatter = DateFormatter()
-        formatter.dateFormat = "yyyy年MM月"
+        formatter.dateFormat = "yyyy年M月"
         if let slideYearMonth = visibleDates.monthDates.first?.date{
             let yearMonth = formatter.string(from: slideYearMonth)
             dateLabel.text = "\(yearMonth)"
@@ -115,10 +113,8 @@ extension CalendarViewController: JTAppleCalendarViewDataSource, JTAppleCalendar
             performSegue(withIdentifier: "addEventSegue", sender: self)
         }
         selectDate = date
-        print(selectDate)
         configureCell(view: cell, cellState: cellState)
         selectDateText = formatter.string(from: date)
-        print(selectDateText)
         //  讓標籤改成選取到的日期
         dateLabel.text = selectDateText
         
@@ -126,9 +122,8 @@ extension CalendarViewController: JTAppleCalendarViewDataSource, JTAppleCalendar
         let db = Firestore.firestore()
         db.collection("events").document(selectDateText).collection("dateEvents").order(by: "startDate", descending: false).addSnapshotListener { (querySnapshot, error) in
             if let querySnapshot = querySnapshot {
-                if self.selectDateText == self.formatter.string(from: cellState.date){
+                if self.selectDateText == self.formatter.string(from: date){
                     self.selectDateEvents = querySnapshot.documents
-                    self.eventTableView.reloadData()
                     self.animateTableView()
                 }
             }
@@ -169,13 +164,17 @@ extension CalendarViewController: JTAppleCalendarViewDataSource, JTAppleCalendar
         let db = Firestore.firestore()
         db.collection("events").addSnapshotListener { (querySnapshot, error) in
             if let querySnapshot = querySnapshot{
-                self.allEvents = querySnapshot.documents
-                for event in self.allEvents{
+                var dateDic = [String : String]()
+                for event in querySnapshot.documents{
                     if let eventDate = event.data()["date"] as? String{
-                        if everyCellDayDate == eventDate{
-                            cell.dotView.isHidden = false
-                        }
+                        dateDic[eventDate] = "yes"
                     }
+                }
+                if dateDic[everyCellDayDate] == nil {
+                    cell.dotView.isHidden = true
+                }
+                else{
+                    cell.dotView.isHidden = false
                 }
             }
         }
