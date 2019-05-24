@@ -22,6 +22,7 @@ class AddAccountViewController: UIViewController {
     var selectAccount: String?
     var selectType: String?
     var selectDateText = ""
+    var selectDate = Date()
     
 
     override func viewDidLoad() {
@@ -51,7 +52,7 @@ class AddAccountViewController: UIViewController {
         upload()
     }
     func upload() {
-        if let money = Int(self.moneyTextField.text!), let selectType = selectType, let selectAccount = selectAccount, selectType.isEmpty == false{
+        if let money = Int(self.moneyTextField.text!), let selectType = selectType, let selectAccount = selectAccount{
             let db = Firestore.firestore()
             let data: [String: Any] = ["date": Date(), "money": String(money), "type": selectType]
             db.collection("accounts").document(selectDateText).collection(selectAccount).addDocument(data: data) { (error) in
@@ -59,7 +60,7 @@ class AddAccountViewController: UIViewController {
                     print(error)
                 }
             }
-            let statusData: [String: String] = ["date": selectDateText]
+            let statusData: [String: Any] = ["date": selectDate]
             db.collection("accounts").document(selectDateText).setData(statusData)
             performSegue(withIdentifier: "unwindToAccount", sender: self)
         }
@@ -86,7 +87,6 @@ extension AddAccountViewController: UICollectionViewDelegate, UICollectionViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "typeCell", for: indexPath) as! TypeCollectionViewCell
         cell.typeLabel.backgroundColor = UIColor(red: 168/255.0, green: 221/255.0, blue: 248/255.0, alpha: 1)
         cell.typeLabel.text = selectTypeArray[indexPath.row]
-        selectType = ""
         
         return cell
     }

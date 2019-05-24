@@ -55,9 +55,12 @@ class CalendarViewController: UIViewController {
     }
     //  tableview顯示特效
     func animateTableView(){
-        let animations = [AnimationType.from(direction: .left, offset: 10.0)]
-        UIView.animate(views: eventTableView.visibleCells, animations: animations, reversed: false, initialAlpha: 0.0, finalAlpha: 1.0, delay: 0, animationInterval: 1, duration: ViewAnimatorConfig.duration, completion: nil)
+//        let animations = [AnimationType.from(direction: .left, offset: 10.0)]
+//        UIView.animate(views: eventTableView.visibleCells, animations: animations, reversed: false, initialAlpha: 0.0, finalAlpha: 1.0, delay: 0, animationInterval: 0.1, duration: ViewAnimatorConfig.duration, completion: nil)
+//        eventTableView.reloadData()
+        let animations = [AnimationType.from(direction: .top, offset: 30.0)]
         eventTableView.reloadData()
+        UIView.animate(views: eventTableView.visibleCells, animations: animations, completion: nil)
     }
 }
 

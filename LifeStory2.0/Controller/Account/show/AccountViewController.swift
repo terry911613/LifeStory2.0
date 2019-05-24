@@ -20,12 +20,12 @@ class AccountViewController: UIViewController {
     
     var now = Date()
     var selectDateText = ""
+    var selectDate = Date()
     let formatter: DateFormatter = DateFormatter()
     var selectDateExpenditure = [QueryDocumentSnapshot]()
     var selectDateIncome = [QueryDocumentSnapshot]()
     let datePicker = UIDatePicker()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,78 +34,85 @@ class AccountViewController: UIViewController {
         formatter.timeZone = TimeZone(identifier: "zh_TW")
         selectDateText = formatter.string(from: now)
         selectDateLabel.text = selectDateText
-        print(selectDateText)
         
         let db = Firestore.firestore()
         db.collection("accounts").document(self.selectDateText).collection("expenditure").order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
-            print(self.selectDateText)
-            print(1)
             if let querySnapshot = querySnapshot {
-                let documentChange = querySnapshot.documentChanges[0]
-                if documentChange.type == .added {
-                    if self.selectDateText == self.formatter.string(from: self.datePicker.date){
-                        self.selectDateExpenditure = querySnapshot.documents
-                        self.animateExpenditureCollectionView()
-                    }
+                if querySnapshot.documents.isEmpty{
+                    self.selectDateExpenditure = [QueryDocumentSnapshot]()
+                    self.totalExpenditureLabel.text = ""
                 }
-                var totalExpenditure = 0
-                for expenditure in querySnapshot.documents{
-                    let expenditureMoney = expenditure.data()["money"] as! String
-                    totalExpenditure += Int(expenditureMoney)!
+                else{
+                    let documentChange = querySnapshot.documentChanges[0]
+                    if documentChange.type == .added {
+                        if self.selectDateText == self.formatter.string(from: self.datePicker.date){
+                            self.selectDateExpenditure = querySnapshot.documents
+                            self.animateExpenditureCollectionView()
+                        }
+                    }
+                    var totalExpenditure = 0
+                    for expenditure in querySnapshot.documents{
+                        let expenditureMoney = expenditure.data()["money"] as! String
+                        totalExpenditure += Int(expenditureMoney)!
+                        
+                    }
+                    self.totalExpenditureLabel.text = "$\(totalExpenditure)"
                     
                 }
-                self.totalExpenditureLabel.text = "$\(totalExpenditure)"
             }
         }
         db.collection("accounts").document(self.selectDateText).collection("income").order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
-            print(self.selectDateText)
             if let querySnapshot = querySnapshot {
-                let documentChange = querySnapshot.documentChanges[0]
-                if documentChange.type == .added {
-                    if self.selectDateText == self.formatter.string(from: self.datePicker.date){
-                        self.selectDateIncome = querySnapshot.documents
-                        self.animateIncomeCollectionView()
-
+                if querySnapshot.documents.isEmpty{
+                    self.selectDateIncome = [QueryDocumentSnapshot]()
+                    self.totalIncomeLabel.text = ""
+                }
+                else{
+                    let documentChange = querySnapshot.documentChanges[0]
+                    if documentChange.type == .added {
+                        if self.selectDateText == self.formatter.string(from: self.datePicker.date){
+                            self.selectDateIncome = querySnapshot.documents
+                            self.animateIncomeCollectionView()
+                            
+                        }
                     }
+                    var totalIncome = 0
+                    for income in querySnapshot.documents{
+                        let incomeMoney = income.data()["money"] as! String
+                        totalIncome += Int(incomeMoney)!
+                    }
+                    self.totalIncomeLabel.text = "$\(totalIncome)"
                 }
-                var totalIncome = 0
-                for income in querySnapshot.documents{
-                    let incomeMoney = income.data()["money"] as! String
-                    totalIncome += Int(incomeMoney)!
-                }
-                self.totalIncomeLabel.text = "$\(totalIncome)"
             }
         }
     }
     
     @IBAction func selectDate(_ sender: UIBarButtonItem) {
+        
         let dateFormatter = DateFormatter()
         datePicker.locale = Locale(identifier: "zh_TW")
         dateFormatter.locale = datePicker.locale
         dateFormatter.dateStyle = .medium
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 250)
-        selectDateText = dateFormatter.string(from: datePicker.date)
-        selectDateLabel.text = selectDateText
         
         let dateAlert = UIAlertController(title: "\n\n\n\n\n\n\n\n\n\n\n", message: nil, preferredStyle: .actionSheet)
         dateAlert.view.addSubview(datePicker)
         //  警告控制器裡的確定按鈕
         let okAction = UIAlertAction(title: "確定", style: .default) { (alert: UIAlertAction) in
-            
-            print(1)
+
             // 按下確定，讓標題改成選取到的日期
             self.selectDateText = dateFormatter.string(from: self.datePicker.date)
             self.selectDateLabel.text = self.selectDateText
+            self.selectDate = self.datePicker.date
             
-//            self.selectDateExpenditure = [QueryDocumentSnapshot]()
-//            self.selectDateIncome = [QueryDocumentSnapshot]()
             let db = Firestore.firestore()
             db.collection("accounts").document(self.selectDateText).collection("expenditure").order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     if querySnapshot.documents.isEmpty{
                         self.selectDateExpenditure = [QueryDocumentSnapshot]()
-                        self.animateExpenditureCollectionView()
+                        self.expenditureCollectionView.reloadData()
+                        self.totalExpenditureLabel.text = ""
                     }
                     else{
                         let documentChange = querySnapshot.documentChanges[0]
@@ -130,7 +137,8 @@ class AccountViewController: UIViewController {
                 if let querySnapshot = querySnapshot {
                     if querySnapshot.documents.isEmpty{
                         self.selectDateIncome = [QueryDocumentSnapshot]()
-                        self.animateIncomeCollectionView()
+                        self.incomeCollectionView.reloadData()
+                        self.totalIncomeLabel.text = ""
                     }
                     else{
                         let documentChange = querySnapshot.documentChanges[0]
@@ -160,20 +168,27 @@ class AccountViewController: UIViewController {
     }
     //  顯示特效
     func animateExpenditureCollectionView(){
-        let animations = [AnimationType.from(direction: .left, offset: 10.0)]
-        UIView.animate(views: expenditureCollectionView.visibleCells, animations: animations, reversed: false, initialAlpha: 0.0, finalAlpha: 1.0, delay: 0, animationInterval: 0.1, duration: ViewAnimatorConfig.duration, completion: nil)
         expenditureCollectionView.reloadData()
+        let animations = [AnimationType.from(direction: .left, offset: 30.0)]
+        expenditureCollectionView.performBatchUpdates({
+            UIView.animate(views: self.expenditureCollectionView.orderedVisibleCells,
+                           animations: animations, completion: nil)
+        }, completion: nil)
     }
     func animateIncomeCollectionView(){
-        let animations = [AnimationType.from(direction: .left, offset: 10.0)]
-        UIView.animate(views: incomeCollectionView.visibleCells, animations: animations, reversed: false, initialAlpha: 0.0, finalAlpha: 1.0, delay: 0, animationInterval: 0.1, duration: ViewAnimatorConfig.duration, completion: nil)
         incomeCollectionView.reloadData()
+        let animations = [AnimationType.from(direction: .right, offset: 30.0)]
+        incomeCollectionView.performBatchUpdates({
+            UIView.animate(views: self.incomeCollectionView.orderedVisibleCells,
+                           animations: animations, completion: nil)
+        }, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addAccount"{
             let addAccountVC = segue.destination as! AddAccountViewController
             addAccountVC.selectDateText = selectDateText
+            addAccountVC.selectDate = selectDate
         }
     }
     @IBAction func unwindSegueBackToAccount(segue: UIStoryboardSegue){
@@ -194,21 +209,6 @@ extension AccountViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == expenditureCollectionView{
-            
-//            let db = Firestore.firestore()
-//            db.collection("accounts").document(self.selectDateText).collection("expenditure").order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
-//                if let querySnapshot = querySnapshot {
-//                    let documentChange = querySnapshot.documentChanges[0]
-//                    if documentChange.type == .added {
-//                        if self.selectDateText == self.formatter.string(from: self.datePicker.date){
-//                            self.selectDateExpenditure = querySnapshot.documents
-//                            self.animateExpenditureCollectionView()
-//                        }
-//                    }
-//
-//                }
-//            }
-            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "expenditureCell", for: indexPath) as! DetailCollectionViewCell
             cell.typeLabel.text = selectDateExpenditure[indexPath.row].data()["type"] as? String
            
@@ -218,21 +218,6 @@ extension AccountViewController: UICollectionViewDataSource {
             return cell
         }
         else{
-            
-//            let db = Firestore.firestore()
-//            db.collection("accounts").document(self.selectDateText).collection("income").order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
-//                if let querySnapshot = querySnapshot {
-//                    let documentChange = querySnapshot.documentChanges[0]
-//                    if documentChange.type == .added {
-//                        if self.selectDateText == self.formatter.string(from: self.datePicker.date){
-//                            self.selectDateIncome = querySnapshot.documents
-//                            self.animateIncomeCollectionView()
-//
-//                        }
-//                    }
-//                }
-//            }
-            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "incomeCell", for: indexPath) as! DetailCollectionViewCell
             cell.typeLabel.text = selectDateIncome[indexPath.row].data()["type"] as? String
             if let income = selectDateIncome[indexPath.row].data()["money"] as? String{
