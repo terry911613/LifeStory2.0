@@ -18,9 +18,8 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var totalIncomeLabel: UILabel!
     @IBOutlet weak var accountingCollectionView: UICollectionView!
     @IBOutlet var longPress: UILongPressGestureRecognizer!
-    @IBOutlet weak var dateButton: UIButton!
-    @IBOutlet weak var trashButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var dateLabel: UILabel!
     
     var now = Date()
     var selectDateText = ""
@@ -28,30 +27,24 @@ class AccountViewController: UIViewController {
     let formatter: DateFormatter = DateFormatter()
     var selectDateAccounting = [QueryDocumentSnapshot]()
     let datePicker = UIDatePicker()
-//    var indexArray = [Int]()
+    let db = Firestore.firestore()
+    let userID = Auth.auth().currentUser!.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        for i in selectDateAccounting{
-//            let pk = i.data()["pk"] as! Int
-//            indexArray.append(pk)
-//        }
-        
-//        accountingCollectionView.addGestureRecognizer(longPress)
-        
-        navigationItem.leftBarButtonItem = editButtonItem
-        navigationItem.leftBarButtonItem?.tintColor = .white
+        navigationItem.rightBarButtonItems = [addButton, editButtonItem]
+        editButtonItem.tintColor = .white
+        addButton.tintColor = .white
+//        navigationItem.rightBarButtonItem?.tintColor = .white
         
         formatter.dateFormat = "yyyy年M月dd日"
         formatter.locale = Locale(identifier: "zh_TW")
         formatter.timeZone = TimeZone(identifier: "zh_TW")
         selectDateText = formatter.string(from: now)
-        dateButton.setTitle(selectDateText, for: .normal)
+        dateLabel.text = selectDateText
         
-        let db = Firestore.firestore()
-        let userID = Auth.auth().currentUser!.uid
-        db.collection(userID).document("LifeStory").collection("accounting").document(self.selectDateText).collection("list").order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
+        db.collection(userID).document("LifeStory").collection("accounting").document("list").collection(self.selectDateText).order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
             if let querySnapshot = querySnapshot {
                 if querySnapshot.documents.isEmpty{
                     self.selectDateAccounting = [QueryDocumentSnapshot]()
@@ -70,7 +63,7 @@ class AccountViewController: UIViewController {
                     var totalIncome = 0
                     for accounting in querySnapshot.documents{
                         if accounting.data()["type"] as! String == "expenditure"{
-                            let expenditureMoney = accounting.data()["Money"] as! String
+                            let expenditureMoney = accounting.data()["money"] as! String
                             totalExpenditure += Int(expenditureMoney)!
                         }
                         else{
@@ -88,22 +81,7 @@ class AccountViewController: UIViewController {
         super.viewWillAppear(animated)
         animateCollectionView()
     }
-//    @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
-//        switch sender.state {
-//        case .began:
-//            guard let selectedIndexPath = accountingCollectionView.indexPathForItem(at: sender.location(in: accountingCollectionView)) else {
-//                break
-//            }
-//            accountingCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-//        case .changed:
-//            accountingCollectionView.updateInteractiveMovementTargetPosition(sender.location(in: sender.view!))
-//        case .ended:
-//            accountingCollectionView.endInteractiveMovement()
-//        default:
-//            accountingCollectionView.cancelInteractiveMovement()
-//        }
-//    }
-    @IBAction func dateButton(_ sender: UIButton) {
+    @IBAction func clickDate(_ sender: UIBarButtonItem) {
         let dateFormatter = DateFormatter()
         datePicker.locale = Locale(identifier: "zh_TW")
         dateFormatter.locale = datePicker.locale
@@ -118,12 +96,9 @@ class AccountViewController: UIViewController {
             
             // 按下確定，讓標題改成選取到的日期
             self.selectDateText = dateFormatter.string(from: self.datePicker.date)
-            self.dateButton.setTitle(self.selectDateText, for: .normal)
+            self.dateLabel.text = self.selectDateText
             self.selectDate = self.datePicker.date
-            
-            let db = Firestore.firestore()
-            let userID = Auth.auth().currentUser!.uid
-            db.collection(userID).document("LifeStory").collection("accounting").document(self.selectDateText).collection("list").order(by: "index", descending: true).addSnapshotListener { (querySnapshot, error) in
+            self.db.collection(self.userID).document("LifeStory").collection("accounting").document("list").collection(self.selectDateText).order(by: "index", descending: true).addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     if querySnapshot.documents.isEmpty{
                         self.selectDateAccounting = [QueryDocumentSnapshot]()
@@ -143,7 +118,7 @@ class AccountViewController: UIViewController {
                         var totalIncome = 0
                         for accounting in querySnapshot.documents{
                             if accounting.data()["type"] as! String == "expenditure"{
-                                let expenditureMoney = accounting.data()["Money"] as! String
+                                let expenditureMoney = accounting.data()["money"] as! String
                                 totalExpenditure += Int(expenditureMoney)!
                             }
                             else{
@@ -164,10 +139,6 @@ class AccountViewController: UIViewController {
         dateAlert.addAction(cancelAction)
         
         self.present(dateAlert, animated: true, completion: nil)
-    }
-    
-    @IBAction func trashButton(_ sender: UIBarButtonItem) {
-        
     }
     //  顯示特效
     func animateCollectionView(){
@@ -217,27 +188,6 @@ extension AccountViewController: UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
     
-//    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-//        return true
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//
-////        let db = Firestore.firestore()
-////        for i in sourceIndexPath.item...destinationIndexPath.item{
-////            let index = selectDateAccounting[i].data()["index"] as! Int
-////            let frankDocRef = db.collection("users").document("\(indexArray[i])")
-////            frankDocRef.updateData(["pk": index + 1])
-////        }
-//        let accounting = selectDateAccounting.remove(at: sourceIndexPath.item)
-//        selectDateAccounting.insert(accounting, at: destinationIndexPath.item)
-////        let a = indexArray.remove(at: sourceIndexPath.item)
-////        indexArray.insert(a, at: destinationIndexPath.item)
-//
-//        print(sourceIndexPath.item)
-//        print(destinationIndexPath.item)
-//    }
-    
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
@@ -252,6 +202,14 @@ extension AccountViewController: UICollectionViewDataSource, UICollectionViewDel
     }
 
     func delete(at indexPath: IndexPath) {
+        let accounting = selectDateAccounting[indexPath.row]
+        db.collection(userID).document("LifeStory").collection("accounting").document("list").collection(self.selectDateText).document(accounting.data()["documentID"] as! String).delete { (error) in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
         selectDateAccounting.remove(at: indexPath.row)
         accountingCollectionView.reloadData()
         print(indexPath.row)
