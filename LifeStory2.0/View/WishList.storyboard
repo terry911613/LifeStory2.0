@@ -36,8 +36,20 @@
                                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqZ-dX-9MA">
                                                             <rect key="frame" x="1" y="1" width="382" height="91.666666666666671"/>
                                                             <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="短期目標" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRn-tx-FrR">
+                                                                    <rect key="frame" x="5" y="5" width="50" height="15"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3sd-kd-V3M">
+                                                                    <rect key="frame" x="350" y="74.666666666666671" width="27" height="12"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出國玩" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmd-fO-coT">
-                                                                    <rect key="frame" x="10" y="10" width="362" height="71.666666666666671"/>
+                                                                    <rect key="frame" x="160.33333333333334" y="33.666666666666664" width="61.333333333333343" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -45,10 +57,12 @@
                                                             </subviews>
                                                             <color key="backgroundColor" red="0.18998533487319946" green="0.35768887400627136" blue="0.43821841478347778" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="trailing" secondItem="gmd-fO-coT" secondAttribute="trailing" constant="10" id="HbL-HT-7EI"/>
-                                                                <constraint firstAttribute="bottom" secondItem="gmd-fO-coT" secondAttribute="bottom" constant="10" id="K39-mA-9St"/>
-                                                                <constraint firstItem="gmd-fO-coT" firstAttribute="leading" secondItem="wqZ-dX-9MA" secondAttribute="leading" constant="10" id="fPw-s3-cHc"/>
-                                                                <constraint firstItem="gmd-fO-coT" firstAttribute="top" secondItem="wqZ-dX-9MA" secondAttribute="top" constant="10" id="tvR-Go-tH2"/>
+                                                                <constraint firstItem="gmd-fO-coT" firstAttribute="centerY" secondItem="wqZ-dX-9MA" secondAttribute="centerY" id="4qK-Ts-XE6"/>
+                                                                <constraint firstAttribute="bottom" secondItem="3sd-kd-V3M" secondAttribute="bottom" constant="5" id="F3h-0S-Rpd"/>
+                                                                <constraint firstItem="bRn-tx-FrR" firstAttribute="top" secondItem="wqZ-dX-9MA" secondAttribute="top" constant="5" id="TY1-ZU-Xbx"/>
+                                                                <constraint firstAttribute="trailing" secondItem="3sd-kd-V3M" secondAttribute="trailing" constant="5" id="esb-kP-xEl"/>
+                                                                <constraint firstItem="bRn-tx-FrR" firstAttribute="leading" secondItem="wqZ-dX-9MA" secondAttribute="leading" constant="5" id="gzC-pv-kMp"/>
+                                                                <constraint firstItem="gmd-fO-coT" firstAttribute="centerX" secondItem="wqZ-dX-9MA" secondAttribute="centerX" id="ieA-a5-qM7"/>
                                                             </constraints>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -83,6 +97,8 @@
                                         <size key="customSize" width="414" height="103.5"/>
                                         <connections>
                                             <outlet property="backView" destination="wqZ-dX-9MA" id="202-aS-Pqt"/>
+                                            <outlet property="dateLabel" destination="3sd-kd-V3M" id="hg1-fu-D0P"/>
+                                            <outlet property="goalLabel" destination="bRn-tx-FrR" id="wGU-JI-DFf"/>
                                             <outlet property="wishListLabel" destination="gmd-fO-coT" id="F3e-4n-tez"/>
                                         </connections>
                                     </collectionViewCell>
@@ -230,7 +246,7 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="statusCell" id="9vR-RA-Zhz" customClass="StatusCollectionViewCell" customModule="LifeStory2_0" customModuleProvider="target">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="goalCell" id="9vR-RA-Zhz" customClass="StatusCollectionViewCell" customModule="LifeStory2_0" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">

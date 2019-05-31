@@ -12,4 +12,6 @@ class WishListCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var wishListLabel: UILabel!
     @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var goalLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
 }

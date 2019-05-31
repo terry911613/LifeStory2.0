@@ -31,20 +31,20 @@ class AddAccountViewController: UIViewController {
         super.viewDidLoad()
         
         selectTypeDetailArray = expenditureType
-        selectType = "Expenditure"
+        selectType = "expenditure"
     }
     @IBAction func selectAccountSegmented(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0{
             selectTypeDetailArray = expenditureType
             typeCollectionView.reloadData()
             selectTypeDetail = ""
-            selectType = "Expenditure"
+            selectType = "expenditure"
         }
         else{
             selectTypeDetailArray = incomeType
             typeCollectionView.reloadData()
             selectTypeDetail = ""
-            selectType = "Income"
+            selectType = "income"
         }
     }
     @IBAction func cancelButton(_ sender: UIButton) {
@@ -57,15 +57,16 @@ class AddAccountViewController: UIViewController {
         if let money = Int(self.moneyTextField.text!), let selectTypeDetail = selectTypeDetail, let selectType = selectType, let index = index{
             SVProgressHUD.show()
             let db = Firestore.firestore()
-            let data: [String: Any] = ["Index": index, "Date": Date(), "Money": String(money),"Type": selectType, "TypeDetail": selectTypeDetail]
+            let data: [String: Any] = ["index": index, "date": Date(), "money": String(money),"type": selectType, "typeDetail": selectTypeDetail]
             let userID = Auth.auth().currentUser!.uid
-            db.collection(userID).document("LifeStory").collection("Accounting").document(selectDateText).collection("ExpenditureAndIncome").addDocument(data: data) { (error) in
+            db.collection(userID).document("LifeStory").collection("accounting").document("list").collection(selectDateText)
+            db.collection(userID).document("LifeStory").collection("accounting").document(selectDateText).collection("list").addDocument(data: data) { (error) in
                 if let error = error {
                     print(error)
                 }
             }
-            let statusData: [String: Any] = ["Date": selectDate]
-            db.collection(userID).document("LifeStory").collection("Accounting").document(selectDateText).setData(statusData)
+            let statusData: [String: Any] = ["date": selectDate]
+            db.collection(userID).document("LifeStory").collection("accounting").document("list").setData(statusData)
             SVProgressHUD.dismiss()
             dismiss(animated: true, completion: nil)
         }

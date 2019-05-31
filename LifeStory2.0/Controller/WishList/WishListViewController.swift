@@ -19,14 +19,14 @@ class WishListViewController: UIViewController {
     var wishListArray = [QueryDocumentSnapshot]()
     @IBOutlet var longpress: UILongPressGestureRecognizer!
     
-    var p: CGPoint?
-    var longPressed = false {
-        didSet {
-            if oldValue != longPressed {
-                WishListCollectionView?.reloadData()
-            }
-        }
-    }
+//    var p: CGPoint?
+//    var longPressed = false {
+//        didSet {
+//            if oldValue != longPressed {
+//                WishListCollectionView?.reloadData()
+//            }
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,22 +48,6 @@ class WishListViewController: UIViewController {
                 }
             }
         }
-        
-//        db.collection(userID).document("LifeStory").collection("WishLists").order(by: "Date", descending: true).addSnapshotListener { (querySnapshot, error) in
-//            if let querySnapshot = querySnapshot {
-//                if querySnapshot.documents.isEmpty{
-//                    self.wishListArray = [QueryDocumentSnapshot]()
-//                }
-//                else{
-//                    let documentChange = querySnapshot.documentChanges[0]
-//                    if documentChange.type == .added {
-//                        self.wishListArray = querySnapshot.documents
-//                        self.animateWishListCollectionView()
-//                    }
-//                }
-//            }
-//        }
-
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -111,11 +95,20 @@ extension WishListViewController: UICollectionViewDataSource, UICollectionViewDe
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "wishListCell", for: indexPath) as! WishListCollectionViewCell
         
         let wishList = wishListArray[indexPath.row]
+        cell.goalLabel.text = wishList.data()["goal"] as? String
         cell.wishListLabel.text = wishList.data()["wishListText"] as? String
-        if wishList.data()["color"] as? String == "green"{
+        
+        let format = DateFormatter()
+        format.locale = Locale(identifier: "zh_TW")
+        format.dateFormat = "yyyy年MM月dd日 a hh:mm"
+        let timestamp = wishList.data()["date"] as! Timestamp
+        let date = timestamp.dateValue()
+        cell.dateLabel.text = format.string(from: date)
+        
+        if wishList.data()["goal"] as? String == "短期目標"{
             cell.backView.backgroundColor = UIColor.flatMint()
         }
-        else if wishList.data()["color"] as? String == "yellow"{
+        else if wishList.data()["goal"] as? String == "中期目標"{
             cell.backView.backgroundColor = UIColor.flatYellow()
         }
         else{

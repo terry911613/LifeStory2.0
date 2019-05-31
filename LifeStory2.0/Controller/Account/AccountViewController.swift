@@ -51,7 +51,7 @@ class AccountViewController: UIViewController {
         
         let db = Firestore.firestore()
         let userID = Auth.auth().currentUser!.uid
-        db.collection(userID).document("LifeStory").collection("Accounting").document(self.selectDateText).collection("ExpenditureAndIncome").order(by: "Date", descending: true).addSnapshotListener { (querySnapshot, error) in
+        db.collection(userID).document("LifeStory").collection("accounting").document(self.selectDateText).collection("list").order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
             if let querySnapshot = querySnapshot {
                 if querySnapshot.documents.isEmpty{
                     self.selectDateAccounting = [QueryDocumentSnapshot]()
@@ -69,12 +69,12 @@ class AccountViewController: UIViewController {
                     var totalExpenditure = 0
                     var totalIncome = 0
                     for accounting in querySnapshot.documents{
-                        if accounting.data()["Type"] as! String == "Expenditure"{
+                        if accounting.data()["type"] as! String == "expenditure"{
                             let expenditureMoney = accounting.data()["Money"] as! String
                             totalExpenditure += Int(expenditureMoney)!
                         }
                         else{
-                            let incomeMoney = accounting.data()["Money"] as! String
+                            let incomeMoney = accounting.data()["money"] as! String
                             totalIncome += Int(incomeMoney)!
                         }
                     }
@@ -123,7 +123,7 @@ class AccountViewController: UIViewController {
             
             let db = Firestore.firestore()
             let userID = Auth.auth().currentUser!.uid
-            db.collection(userID).document("LifeStory").collection("Accounting").document(self.selectDateText).collection("ExpenditureAndIncome").order(by: "Index", descending: true).addSnapshotListener { (querySnapshot, error) in
+            db.collection(userID).document("LifeStory").collection("accounting").document(self.selectDateText).collection("list").order(by: "index", descending: true).addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     if querySnapshot.documents.isEmpty{
                         self.selectDateAccounting = [QueryDocumentSnapshot]()
@@ -142,12 +142,12 @@ class AccountViewController: UIViewController {
                         var totalExpenditure = 0
                         var totalIncome = 0
                         for accounting in querySnapshot.documents{
-                            if accounting.data()["Type"] as! String == "Expenditure"{
+                            if accounting.data()["type"] as! String == "expenditure"{
                                 let expenditureMoney = accounting.data()["Money"] as! String
                                 totalExpenditure += Int(expenditureMoney)!
                             }
                             else{
-                                let incomeMoney = accounting.data()["Money"] as! String
+                                let incomeMoney = accounting.data()["money"] as! String
                                 totalIncome += Int(incomeMoney)!
                             }
                         }
@@ -202,8 +202,8 @@ extension AccountViewController: UICollectionViewDataSource, UICollectionViewDel
         cell.delegate = self
         
         let accounting = selectDateAccounting[indexPath.row]
-        if let money = accounting.data()["Money"] as? String{
-            if accounting.data()["Type"] as? String == "Expenditure"{
+        if let money = accounting.data()["money"] as? String{
+            if accounting.data()["type"] as? String == "expenditure"{
                 cell.moneyLabel.text = "-$\(money)"
                 cell.backView.backgroundColor = UIColor.flatRedColorDark()
             }
@@ -212,7 +212,7 @@ extension AccountViewController: UICollectionViewDataSource, UICollectionViewDel
                 cell.backView.backgroundColor = UIColor.flatGreenColorDark()
             }
         }
-        cell.typeDetailLabel.text = accounting.data()["TypeDetail"] as? String
+        cell.typeDetailLabel.text = accounting.data()["typeDetail"] as? String
         
         return cell
     }
