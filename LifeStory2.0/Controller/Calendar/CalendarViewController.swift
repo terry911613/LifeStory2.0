@@ -9,6 +9,7 @@
 import UIKit
 import JTAppleCalendar
 import Firebase
+import FirebaseAuth
 import ViewAnimator
 
 class CalendarViewController: UIViewController {
@@ -28,6 +29,7 @@ class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // 讓app一啟動就是今天的日曆
         calendarView.scrollToDate(now, animateScroll: false)
         // 讓今天被選取
@@ -44,20 +46,18 @@ class CalendarViewController: UIViewController {
         timeFormatter.dateFormat = "a hh:mm"
         timeFormatter.locale = Locale(identifier: "zh_TW")
         timeFormatter.timeZone = TimeZone(identifier: "zh_TW")
-        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        animateTableView()
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let addEventVC = segue.destination as! AddEventViewController
         addEventVC.selectDateText = selectDateText
         addEventVC.selectDate = selectDate
     }
-    @IBAction func unwindSegueBack(segue: UIStoryboardSegue){
-    }
     //  tableview顯示特效
     func animateTableView(){
-//        let animations = [AnimationType.from(direction: .left, offset: 10.0)]
-//        UIView.animate(views: eventTableView.visibleCells, animations: animations, reversed: false, initialAlpha: 0.0, finalAlpha: 1.0, delay: 0, animationInterval: 0.1, duration: ViewAnimatorConfig.duration, completion: nil)
-//        eventTableView.reloadData()
         let animations = [AnimationType.from(direction: .top, offset: 30.0)]
         eventTableView.reloadData()
         UIView.animate(views: eventTableView.visibleCells, animations: animations, completion: nil)
@@ -109,7 +109,6 @@ extension CalendarViewController: JTAppleCalendarViewDataSource, JTAppleCalendar
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        
         //  判斷是不是點第二次，如果是點兩次的話跳出細項
         let cell = cell as! DateCell
         if cell.selectedView.isHidden == false{
@@ -123,7 +122,8 @@ extension CalendarViewController: JTAppleCalendarViewDataSource, JTAppleCalendar
         
         self.selectDateEvents = [QueryDocumentSnapshot]()
         let db = Firestore.firestore()
-        db.collection("events").document(selectDateText).collection("dateEvents").order(by: "startDate", descending: false).addSnapshotListener { (querySnapshot, error) in
+        let userID = Auth.auth().currentUser!.uid
+        db.collection(userID).document("LifeStory").collection("Events").document(selectDateText).collection("DateEvents").order(by: "startDate", descending: false).addSnapshotListener { (querySnapshot, error) in
             if let querySnapshot = querySnapshot {
                 if self.selectDateText == self.formatter.string(from: date){
                     self.selectDateEvents = querySnapshot.documents
@@ -150,22 +150,27 @@ extension CalendarViewController: JTAppleCalendarViewDataSource, JTAppleCalendar
             cell.dateLabel.textColor = .black
             cell.isHidden = false
         } else {
-            cell.dateLabel.textColor = .lightGray
+            cell.dateLabel.textColor = UIColor.flatWhiteColorDark()
         }
     }
     //  按日期讓日期上有粉色的圓圈
     func handleCellSelected(cell: DateCell, cellState: CellState) {
         if cellState.isSelected {
             cell.selectedView.isHidden = false
+            cell.dateLabel.textColor = .white
         } else {
             cell.selectedView.isHidden = true
+            if cellState.dateBelongsTo == .thisMonth{
+                cell.dateLabel.textColor = .black
+            }
         }
     }
     //  日期裡有事件的話，在日期下方標示
     func handleCellEvents(cell: DateCell, cellState: CellState) {
         let everyCellDayDate = formatter.string(from: cellState.date)
         let db = Firestore.firestore()
-        db.collection("events").addSnapshotListener { (querySnapshot, error) in
+        let userID = Auth.auth().currentUser!.uid
+        db.collection(userID).document("LifeStory").collection("Events").addSnapshotListener { (querySnapshot, error) in
             if let querySnapshot = querySnapshot{
                 var dateDic = [String : String]()
                 for event in querySnapshot.documents{
@@ -191,13 +196,15 @@ extension CalendarViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "eventCell", for: indexPath) as! EventTableViewCell
-        let startTimestamp = selectDateEvents[indexPath.row].data()["startDate"] as! Timestamp
+        
+        let events = selectDateEvents[indexPath.row]
+        let startTimestamp = events.data()["startDate"] as! Timestamp
         let startDate = startTimestamp.dateValue()
         cell.startTimeLabel.text = timeFormatter.string(from: startDate)
-        let endTimeTimestamp = selectDateEvents[indexPath.row].data()["endDate"] as! Timestamp
+        let endTimeTimestamp = events.data()["endDate"] as! Timestamp
         let endDate = endTimeTimestamp.dateValue()
         cell.endTimeLabel.text = timeFormatter.string(from: endDate)
-        cell.eventTitleLabel.text = selectDateEvents[indexPath.row].data()["title"] as? String
+        cell.eventTitleLabel.text = events.data()["title"] as? String
         return cell
     }
     

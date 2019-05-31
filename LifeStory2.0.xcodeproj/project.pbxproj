@@ -7,9 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		442AD35A229796FE00FEC5D6 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442AD359229796FE00FEC5D6 /* ToDoListViewController.swift */; };
-		442AD35C229797E300FEC5D6 /* ToDoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442AD35B229797E300FEC5D6 /* ToDoListCollectionViewCell.swift */; };
+		442AD35A229796FE00FEC5D6 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442AD359229796FE00FEC5D6 /* WishListViewController.swift */; };
+		442AD35C229797E300FEC5D6 /* WishListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442AD35B229797E300FEC5D6 /* WishListCollectionViewCell.swift */; };
 		442AD3812297B01200FEC5D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 442AD3802297B01200FEC5D6 /* GoogleService-Info.plist */; };
+		442EAE0B2298454000F2C9F3 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442EAE0A2298454000F2C9F3 /* DiaryViewController.swift */; };
+		442EAE0D2298461300F2C9F3 /* DiaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442EAE0C2298461300F2C9F3 /* DiaryCollectionViewCell.swift */; };
+		442EAE0F22984CA000F2C9F3 /* AddDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442EAE0E22984CA000F2C9F3 /* AddDiaryViewController.swift */; };
+		4478781B22991397008041A2 /* PersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478781A22991397008041A2 /* PersonalViewController.swift */; };
+		4478781D2299507A008041A2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478781C2299507A008041A2 /* LoginViewController.swift */; };
+		4478781F22995C43008041A2 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478781E22995C43008041A2 /* RegisterViewController.swift */; };
+		44B1EA6622981F88004E5587 /* AddWishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B1EA6522981F88004E5587 /* AddWishListViewController.swift */; };
+		44B1EA6922982065004E5587 /* StatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B1EA6822982065004E5587 /* StatusCollectionViewCell.swift */; };
 		44D9C7B02296500800F2C617 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7AF2296500800F2C617 /* AppDelegate.swift */; };
 		44D9C7B22296500800F2C617 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7B12296500800F2C617 /* CalendarViewController.swift */; };
 		44D9C7B52296500800F2C617 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7B32296500800F2C617 /* Main.storyboard */; };
@@ -17,8 +25,8 @@
 		44D9C7BA2296500A00F2C617 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7B82296500A00F2C617 /* LaunchScreen.storyboard */; };
 		44D9C7C4229650E600F2C617 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C3229650E600F2C617 /* Calendar.storyboard */; };
 		44D9C7C62296510700F2C617 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C52296510700F2C617 /* Account.storyboard */; };
-		44D9C7C82296511100F2C617 /* ToDoList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C72296511100F2C617 /* ToDoList.storyboard */; };
-		44D9C7CA2296511D00F2C617 /* Statistics.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C92296511D00F2C617 /* Statistics.storyboard */; };
+		44D9C7C82296511100F2C617 /* WishList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C72296511100F2C617 /* WishList.storyboard */; };
+		44D9C7CA2296511D00F2C617 /* Diary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C92296511D00F2C617 /* Diary.storyboard */; };
 		44D9C7CC2296512B00F2C617 /* Personal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7CB2296512B00F2C617 /* Personal.storyboard */; };
 		44D9C7D12296536200F2C617 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7D02296536200F2C617 /* DateCell.swift */; };
 		44D9C7D32296537D00F2C617 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7D22296537D00F2C617 /* AddEventViewController.swift */; };
@@ -34,9 +42,17 @@
 /* Begin PBXFileReference section */
 		0A7957F4C3A84483CB488E60 /* Pods-LifeStory2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifeStory2.0.release.xcconfig"; path = "Target Support Files/Pods-LifeStory2.0/Pods-LifeStory2.0.release.xcconfig"; sourceTree = "<group>"; };
 		377276ABA9238E9A97F83210 /* Pods-LifeStory2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifeStory2.0.debug.xcconfig"; path = "Target Support Files/Pods-LifeStory2.0/Pods-LifeStory2.0.debug.xcconfig"; sourceTree = "<group>"; };
-		442AD359229796FE00FEC5D6 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
-		442AD35B229797E300FEC5D6 /* ToDoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListCollectionViewCell.swift; sourceTree = "<group>"; };
+		442AD359229796FE00FEC5D6 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
+		442AD35B229797E300FEC5D6 /* WishListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCollectionViewCell.swift; sourceTree = "<group>"; };
 		442AD3802297B01200FEC5D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		442EAE0A2298454000F2C9F3 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
+		442EAE0C2298461300F2C9F3 /* DiaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCollectionViewCell.swift; sourceTree = "<group>"; };
+		442EAE0E22984CA000F2C9F3 /* AddDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDiaryViewController.swift; sourceTree = "<group>"; };
+		4478781A22991397008041A2 /* PersonalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalViewController.swift; sourceTree = "<group>"; };
+		4478781C2299507A008041A2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		4478781E22995C43008041A2 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		44B1EA6522981F88004E5587 /* AddWishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWishListViewController.swift; sourceTree = "<group>"; };
+		44B1EA6822982065004E5587 /* StatusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCollectionViewCell.swift; sourceTree = "<group>"; };
 		44D9C7AC2296500800F2C617 /* LifeStory2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeStory2.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44D9C7AF2296500800F2C617 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44D9C7B12296500800F2C617 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -46,8 +62,8 @@
 		44D9C7BB2296500A00F2C617 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44D9C7C3229650E600F2C617 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
 		44D9C7C52296510700F2C617 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
-		44D9C7C72296511100F2C617 /* ToDoList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ToDoList.storyboard; sourceTree = "<group>"; };
-		44D9C7C92296511D00F2C617 /* Statistics.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Statistics.storyboard; sourceTree = "<group>"; };
+		44D9C7C72296511100F2C617 /* WishList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WishList.storyboard; sourceTree = "<group>"; };
+		44D9C7C92296511D00F2C617 /* Diary.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Diary.storyboard; sourceTree = "<group>"; };
 		44D9C7CB2296512B00F2C617 /* Personal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Personal.storyboard; sourceTree = "<group>"; };
 		44D9C7D02296536200F2C617 /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
 		44D9C7D22296537D00F2C617 /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
@@ -72,13 +88,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		442AD358229796D700FEC5D6 /* toDoList */ = {
+		442EAE09229840D700F2C9F3 /* Diary */ = {
 			isa = PBXGroup;
 			children = (
-				442AD359229796FE00FEC5D6 /* ToDoListViewController.swift */,
-				442AD35B229797E300FEC5D6 /* ToDoListCollectionViewCell.swift */,
+				442EAE0A2298454000F2C9F3 /* DiaryViewController.swift */,
+				442EAE0C2298461300F2C9F3 /* DiaryCollectionViewCell.swift */,
+				442EAE0E22984CA000F2C9F3 /* AddDiaryViewController.swift */,
 			);
-			path = toDoList;
+			path = Diary;
+			sourceTree = "<group>";
+		};
+		4478781922991349008041A2 /* Personal */ = {
+			isa = PBXGroup;
+			children = (
+				4478781A22991397008041A2 /* PersonalViewController.swift */,
+			);
+			path = Personal;
+			sourceTree = "<group>";
+		};
+		44B1EA6722981FC3004E5587 /* WishList */ = {
+			isa = PBXGroup;
+			children = (
+				442AD359229796FE00FEC5D6 /* WishListViewController.swift */,
+				442AD35B229797E300FEC5D6 /* WishListCollectionViewCell.swift */,
+				44B1EA6522981F88004E5587 /* AddWishListViewController.swift */,
+				44B1EA6822982065004E5587 /* StatusCollectionViewCell.swift */,
+			);
+			path = WishList;
 			sourceTree = "<group>";
 		};
 		44D9C7A32296500800F2C617 = {
@@ -105,6 +141,7 @@
 				44D9C7AF2296500800F2C617 /* AppDelegate.swift */,
 				44D9C7C12296509B00F2C617 /* View */,
 				44D9C7C2229650A600F2C617 /* Controller */,
+				44D9C7DD229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift */,
 				44D9C7B62296500A00F2C617 /* Assets.xcassets */,
 				44D9C7B82296500A00F2C617 /* LaunchScreen.storyboard */,
 				44D9C7BB2296500A00F2C617 /* Info.plist */,
@@ -119,8 +156,8 @@
 				44D9C7B32296500800F2C617 /* Main.storyboard */,
 				44D9C7C3229650E600F2C617 /* Calendar.storyboard */,
 				44D9C7C52296510700F2C617 /* Account.storyboard */,
-				44D9C7C72296511100F2C617 /* ToDoList.storyboard */,
-				44D9C7C92296511D00F2C617 /* Statistics.storyboard */,
+				44D9C7C72296511100F2C617 /* WishList.storyboard */,
+				44D9C7C92296511D00F2C617 /* Diary.storyboard */,
 				44D9C7CB2296512B00F2C617 /* Personal.storyboard */,
 			);
 			path = View;
@@ -129,10 +166,13 @@
 		44D9C7C2229650A600F2C617 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				44D9C7DD229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift */,
+				4478781E22995C43008041A2 /* RegisterViewController.swift */,
+				4478781C2299507A008041A2 /* LoginViewController.swift */,
 				44D9C7CD2296517C00F2C617 /* Calendar */,
 				44D9C7DA2296977600F2C617 /* Account */,
-				442AD358229796D700FEC5D6 /* toDoList */,
+				44B1EA6722981FC3004E5587 /* WishList */,
+				442EAE09229840D700F2C9F3 /* Diary */,
+				4478781922991349008041A2 /* Personal */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -151,28 +191,12 @@
 		44D9C7DA2296977600F2C617 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				44D9C7E52296EE2C00F2C617 /* show */,
-				44D9C7E62296EE3100F2C617 /* add */,
-			);
-			path = Account;
-			sourceTree = "<group>";
-		};
-		44D9C7E52296EE2C00F2C617 /* show */ = {
-			isa = PBXGroup;
-			children = (
 				44D9C7DB229697A300F2C617 /* AccountViewController.swift */,
 				44D9C7DF22969A0C00F2C617 /* DetailCollectionViewCell.swift */,
-			);
-			path = show;
-			sourceTree = "<group>";
-		};
-		44D9C7E62296EE3100F2C617 /* add */ = {
-			isa = PBXGroup;
-			children = (
 				44D9C7E32296ED4900F2C617 /* AddAccountViewController.swift */,
 				44D9C7E72296EE5800F2C617 /* TypeCollectionViewCell.swift */,
 			);
-			path = add;
+			path = Account;
 			sourceTree = "<group>";
 		};
 		639FDE7E3749D1921D210128 /* Pods */ = {
@@ -204,6 +228,7 @@
 				44D9C7A92296500800F2C617 /* Frameworks */,
 				44D9C7AA2296500800F2C617 /* Resources */,
 				ACAFB790D37083DDEDA9F297 /* [CP] Embed Pods Frameworks */,
+				04CA8B131AD0EE2DEC6C04DB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -258,15 +283,37 @@
 				44D9C7BA2296500A00F2C617 /* LaunchScreen.storyboard in Resources */,
 				44D9C7B72296500A00F2C617 /* Assets.xcassets in Resources */,
 				44D9C7B52296500800F2C617 /* Main.storyboard in Resources */,
-				44D9C7C82296511100F2C617 /* ToDoList.storyboard in Resources */,
+				44D9C7C82296511100F2C617 /* WishList.storyboard in Resources */,
 				44D9C7CC2296512B00F2C617 /* Personal.storyboard in Resources */,
-				44D9C7CA2296511D00F2C617 /* Statistics.storyboard in Resources */,
+				44D9C7CA2296511D00F2C617 /* Diary.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		04CA8B131AD0EE2DEC6C04DB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LifeStory2.0/Pods-LifeStory2.0-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LifeStory2.0/Pods-LifeStory2.0-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		26ABDBED4FBB612E9E8EBE91 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -299,11 +346,15 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-LifeStory2.0/Pods-LifeStory2.0-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/TTGEmojiRate/TTGEmojiRate.framework",
 				"${BUILT_PRODUCTS_DIR}/ViewAnimator/ViewAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
@@ -315,11 +366,15 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTGEmojiRate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewAnimator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
@@ -339,17 +394,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				44D9C7E82296EE5800F2C617 /* TypeCollectionViewCell.swift in Sources */,
+				442EAE0B2298454000F2C9F3 /* DiaryViewController.swift in Sources */,
 				44D9C7B22296500800F2C617 /* CalendarViewController.swift in Sources */,
 				44D9C7E42296ED4900F2C617 /* AddAccountViewController.swift in Sources */,
+				4478781D2299507A008041A2 /* LoginViewController.swift in Sources */,
+				4478781B22991397008041A2 /* PersonalViewController.swift in Sources */,
 				44D9C7DE229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift in Sources */,
-				442AD35A229796FE00FEC5D6 /* ToDoListViewController.swift in Sources */,
+				442AD35A229796FE00FEC5D6 /* WishListViewController.swift in Sources */,
 				44D9C7E022969A0C00F2C617 /* DetailCollectionViewCell.swift in Sources */,
 				44D9C7D32296537D00F2C617 /* AddEventViewController.swift in Sources */,
+				442EAE0D2298461300F2C9F3 /* DiaryCollectionViewCell.swift in Sources */,
+				4478781F22995C43008041A2 /* RegisterViewController.swift in Sources */,
 				44D9C7DC229697A300F2C617 /* AccountViewController.swift in Sources */,
-				442AD35C229797E300FEC5D6 /* ToDoListCollectionViewCell.swift in Sources */,
+				442AD35C229797E300FEC5D6 /* WishListCollectionViewCell.swift in Sources */,
 				44D9C7D12296536200F2C617 /* DateCell.swift in Sources */,
+				442EAE0F22984CA000F2C9F3 /* AddDiaryViewController.swift in Sources */,
 				44D9C7D52296539400F2C617 /* EventTableViewCell.swift in Sources */,
 				44D9C7B02296500800F2C617 /* AppDelegate.swift in Sources */,
+				44B1EA6922982065004E5587 /* StatusCollectionViewCell.swift in Sources */,
+				44B1EA6622981F88004E5587 /* AddWishListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

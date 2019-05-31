@@ -8,6 +8,8 @@
 
 import UIKit
 
-class ToDoListCollectionViewCell: UICollectionViewCell {
+class WishListCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var wishListLabel: UILabel!
+    @IBOutlet weak var backView: UIView!
 }

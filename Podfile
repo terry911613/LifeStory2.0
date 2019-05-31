@@ -13,5 +13,10 @@ pod 'Firebase/Firestore'
 pod 'Firebase/Storage'
 pod 'Kingfisher'
 pod "ViewAnimator"
+pod "TTGEmojiRate"
+pod "Firebase/Auth"
+pod 'GoogleSignIn'
+pod 'SVProgressHUD'
+pod 'ChameleonFramework/Swift'
 
 end

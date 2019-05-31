@@ -8,10 +8,11 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
+import SVProgressHUD
 
 class AddEventViewController: UIViewController {
     
-    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
@@ -107,18 +108,20 @@ class AddEventViewController: UIViewController {
     
     func upload() {
         if let title = self.textField.text, let startDate = startDate, let endDate = endDate{
-            activityIndicatorView.startAnimating()
+            SVProgressHUD.show()
             let db = Firestore.firestore()
             let data: [String: Any] = ["title": title, "startDate": startDate, "endDate": endDate]
-            db.collection("events").document(startDateText).collection("dateEvents").addDocument(data: data) { (error) in
+            let userID = Auth.auth().currentUser!.uid
+            let a = db.collection(userID).document("LifeStory").collection("Events").document(selectDateText)
+            db.collection(userID).document("LifeStory").collection("Events").document(selectDateText).collection("DateEvents").addDocument(data: data) { (error) in
                 if let error = error {
                     print(error)
                 }
             }
-            let statusData: [String: String] = ["date": startDateText]
-            db.collection("events").document(startDateText).setData(statusData)
-            activityIndicatorView.stopAnimating()
-            performSegue(withIdentifier: "unwindToCalendar", sender: self)
+            let statusData: [String: String] = ["date": selectDateText]
+            db.collection(userID).document("LifeStory").collection("Events").document(selectDateText).setData(statusData)
+            SVProgressHUD.dismiss()
+            dismiss(animated: true, completion: nil)
         }
         else{
             let alert = UIAlertController(title: "請填寫完整", message: "", preferredStyle: .alert)

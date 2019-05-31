@@ -58,7 +58,7 @@ public extension UIView {
     ///   - animationInterval: Interval between the animations of each view.
     ///   - duration: TimeInterval the animation takes to complete.
     ///   - completion: CompletionBlock after the animation finishes.
-    public static func animate(views: [UIView],
+    static func animate(views: [UIView],
                                animations: [Animation],
                                reversed: Bool = false,
                                initialAlpha: CGFloat = 0.0,

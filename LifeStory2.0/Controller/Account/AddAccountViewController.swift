@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
+import SVProgressHUD
 
 class AddAccountViewController: UIViewController {
     
@@ -18,31 +20,31 @@ class AddAccountViewController: UIViewController {
     
     var expenditureType = ["飲食", "娛樂", "生活", "交通", "購物", "醫療", "教育", "其他"]
     var incomeType = ["薪水", "獎金", "投資", "補助", "其他"]
-    var selectTypeArray = [String]()
-    var selectAccount: String?
+    var selectTypeDetailArray = [String]()
     var selectType: String?
+    var selectTypeDetail: String?
     var selectDateText = ""
     var selectDate = Date()
-    
+    var index: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        selectTypeArray = expenditureType
-        selectAccount = "expenditure"
+        selectTypeDetailArray = expenditureType
+        selectType = "Expenditure"
     }
     @IBAction func selectAccountSegmented(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0{
-            selectTypeArray = expenditureType
+            selectTypeDetailArray = expenditureType
             typeCollectionView.reloadData()
-            selectType = ""
-            selectAccount = "expenditure"
+            selectTypeDetail = ""
+            selectType = "Expenditure"
         }
         else{
-            selectTypeArray = incomeType
+            selectTypeDetailArray = incomeType
             typeCollectionView.reloadData()
-            selectType = ""
-            selectAccount = "income"
+            selectTypeDetail = ""
+            selectType = "Income"
         }
     }
     @IBAction func cancelButton(_ sender: UIButton) {
@@ -52,19 +54,21 @@ class AddAccountViewController: UIViewController {
         upload()
     }
     func upload() {
-        if let money = Int(self.moneyTextField.text!), let selectType = selectType, let selectAccount = selectAccount{
+        if let money = Int(self.moneyTextField.text!), let selectTypeDetail = selectTypeDetail, let selectType = selectType, let index = index{
+            SVProgressHUD.show()
             let db = Firestore.firestore()
-            let data: [String: Any] = ["date": Date(), "money": String(money), "type": selectType]
-            db.collection("accounts").document(selectDateText).collection(selectAccount).addDocument(data: data) { (error) in
+            let data: [String: Any] = ["Index": index, "Date": Date(), "Money": String(money),"Type": selectType, "TypeDetail": selectTypeDetail]
+            let userID = Auth.auth().currentUser!.uid
+            db.collection(userID).document("LifeStory").collection("Accounting").document(selectDateText).collection("ExpenditureAndIncome").addDocument(data: data) { (error) in
                 if let error = error {
                     print(error)
                 }
             }
-            let statusData: [String: Any] = ["date": selectDate]
-            db.collection("accounts").document(selectDateText).setData(statusData)
-            performSegue(withIdentifier: "unwindToAccount", sender: self)
+            let statusData: [String: Any] = ["Date": selectDate]
+            db.collection(userID).document("LifeStory").collection("Accounting").document(selectDateText).setData(statusData)
+            SVProgressHUD.dismiss()
+            dismiss(animated: true, completion: nil)
         }
-            
         else{
             let alert = UIAlertController(title: "請填寫正確", message: "", preferredStyle: .alert)
             let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
@@ -80,24 +84,24 @@ class AddAccountViewController: UIViewController {
 
 extension AddAccountViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectTypeArray.count
+        return selectTypeDetailArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "typeCell", for: indexPath) as! TypeCollectionViewCell
-        cell.typeLabel.backgroundColor = UIColor(red: 168/255.0, green: 221/255.0, blue: 248/255.0, alpha: 1)
-        cell.typeLabel.text = selectTypeArray[indexPath.row]
+        cell.typeLabel.backgroundColor = UIColor.flatMint()
+        cell.typeLabel.text = selectTypeDetailArray[indexPath.row]
         
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! TypeCollectionViewCell
-        cell.typeLabel.backgroundColor = UIColor(red: 100/255.0, green: 190/255.0, blue: 250/255.0, alpha: 1)
-        selectType = selectTypeArray[indexPath.row]
+        cell.typeLabel.backgroundColor = UIColor.flatMintColorDark()
+        selectTypeDetail = selectTypeDetailArray[indexPath.row]
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! TypeCollectionViewCell
-        cell.typeLabel.backgroundColor = UIColor(red: 168/255.0, green: 221/255.0, blue: 248/255.0, alpha: 1)
+        cell.typeLabel.backgroundColor = UIColor.flatMint()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
