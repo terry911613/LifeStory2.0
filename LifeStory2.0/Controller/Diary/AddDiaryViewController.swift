@@ -86,16 +86,17 @@ class AddDiaryViewController: UIViewController, UIImagePickerControllerDelegate,
                         SVProgressHUD.dismiss()
                         return
                     }
-                    let data: [String: Any] = ["Date": Date(),"DateString": self.todayDateString, "PhotoUrl": downloadURL.absoluteString, "Title": self.titleTextField.text!, "Mood": self.rate, "DiaryText": self.diaryTextView.text!]
+                    let timeStamp = String(Date().timeIntervalSince1970)
+                    let data: [String: Any] = ["documentID": timeStamp, "date": Date(), "dateString": self.todayDateString, "photoUrl": downloadURL.absoluteString, "title": self.titleTextField.text!, "mood": self.rate, "diaryText": self.diaryTextView.text!]
                     let userID = Auth.auth().currentUser!.uid
-                    db.collection(userID).document("LifeStory").collection("Diaries").addDocument(data: data) { (error) in
+                    db.collection(userID).document("LifeStory").collection("diaries").document(timeStamp).setData(data, completion: { (error) in
                         guard error == nil else {
                             SVProgressHUD.dismiss()
                             return
                         }
                         SVProgressHUD.dismiss()
                         self.navigationController?.popViewController(animated: true)
-                    }
+                    })
                 })
             }
         }

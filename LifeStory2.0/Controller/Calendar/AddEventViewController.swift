@@ -110,16 +110,17 @@ class AddEventViewController: UIViewController {
         if let title = self.textField.text, let startDate = startDate, let endDate = endDate{
             SVProgressHUD.show()
             let db = Firestore.firestore()
-            let data: [String: Any] = ["title": title, "startDate": startDate, "endDate": endDate]
             let userID = Auth.auth().currentUser!.uid
-            let a = db.collection(userID).document("LifeStory").collection("Events").document(selectDateText)
-            db.collection(userID).document("LifeStory").collection("Events").document(selectDateText).collection("DateEvents").addDocument(data: data) { (error) in
+            let timeStamp = String(Date().timeIntervalSince1970)
+            let data: [String: Any] = ["documentID": timeStamp, "title": title, "startDate": startDate, "endDate": endDate]
+            
+            db.collection(userID).document("LifeStory").collection("events").document(selectDateText).collection("dateEvents").document(timeStamp).setData(data) { (error) in
                 if let error = error {
                     print(error)
                 }
             }
             let statusData: [String: String] = ["date": selectDateText]
-            db.collection(userID).document("LifeStory").collection("Events").document(selectDateText).setData(statusData)
+            db.collection(userID).document("LifeStory").collection("events").document(selectDateText).setData(statusData)
             SVProgressHUD.dismiss()
             dismiss(animated: true, completion: nil)
         }

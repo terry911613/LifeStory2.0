@@ -10,10 +10,27 @@ import UIKit
 import TTGEmojiRate
 
 class DiaryCollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var dailyImageView: UIImageView!
     @IBOutlet weak var emojiView: EmojiRateView!
     @IBOutlet weak var diaryTextView: UITextView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    var indexPath: IndexPath!
+    weak var delegate: CollectionViewCellDelegate?
+    
+    var isEditing: Bool = false{
+        didSet{
+            deleteButton.isHidden = !isEditing
+        }
+    }
+    
+    @IBAction func deleteButton(_ sender: UIButton) {
+        if indexPath != nil {
+            delegate?.delete(at: indexPath)
+        }
+    }
     
 }

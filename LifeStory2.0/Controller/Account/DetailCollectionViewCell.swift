@@ -8,10 +8,7 @@
 
 import UIKit
 
-protocol CollectionViewCellDelegate: class {
-//    func delete(cell: DetailCollectionViewCell)
-    func delete(at indexPath: IndexPath)
-}
+
 
 class DetailCollectionViewCell: UICollectionViewCell {
     
@@ -31,7 +28,6 @@ class DetailCollectionViewCell: UICollectionViewCell {
     
     @IBAction func deleteButton(_ sender: UIButton) {
         if indexPath != nil {
-//            delegate?.delete(cell: self)
             delegate?.delete(at: indexPath)
         }
     }

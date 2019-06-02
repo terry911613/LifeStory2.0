@@ -36,9 +36,9 @@ class AddWishListViewController: UIViewController {
             SVProgressHUD.show()
             let db = Firestore.firestore()
             let userID = Auth.auth().currentUser!.uid
-            let timeStampInt = String(Date().timeIntervalSince1970)
-            let data: [String: Any] = ["documentID": timeStampInt, "index": index, "wishListText": wishText, "goal": selectGoal, "date": Date()]
-            db.collection(userID).document("LifeStory").collection("wishLists").document(timeStampInt).setData(data) { (error) in
+            let timeStamp = String(Date().timeIntervalSince1970)
+            let data: [String: Any] = ["documentID": timeStamp, "index": index, "wishListText": wishText, "goal": selectGoal, "date": Date()]
+            db.collection(userID).document("LifeStory").collection("wishLists").document(timeStamp).setData(data) { (error) in
                 if let error = error {
                     print("Error writing document: \(error)")
                 } else {

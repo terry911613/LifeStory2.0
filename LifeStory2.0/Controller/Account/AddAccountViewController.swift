@@ -57,10 +57,10 @@ class AddAccountViewController: UIViewController {
         if let money = Int(self.moneyTextField.text!), let selectTypeDetail = selectTypeDetail, let selectType = selectType, let index = index{
             SVProgressHUD.show()
             let db = Firestore.firestore()
-            let data: [String: Any] = ["index": index, "date": Date(), "money": String(money),"type": selectType, "typeDetail": selectTypeDetail]
+            let timeStamp = String(Date().timeIntervalSince1970)
+            let data: [String: Any] = ["documentID": timeStamp, "index": index, "date": Date(), "money": String(money),"type": selectType, "typeDetail": selectTypeDetail]
             let userID = Auth.auth().currentUser!.uid
-            db.collection(userID).document("LifeStory").collection("accounting").document("list").collection(selectDateText)
-            db.collection(userID).document("LifeStory").collection("accounting").document(selectDateText).collection("list").addDocument(data: data) { (error) in
+            db.collection(userID).document("LifeStory").collection("accounting").document("list").collection(selectDateText).document(timeStamp).setData(data) { (error) in
                 if let error = error {
                     print(error)
                 }

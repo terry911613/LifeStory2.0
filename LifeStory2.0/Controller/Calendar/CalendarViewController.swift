@@ -24,8 +24,9 @@ class CalendarViewController: UIViewController {
     let formatter: DateFormatter = DateFormatter()
     let timeFormatter = DateFormatter()
     
-    var allEvents = [QueryDocumentSnapshot]()
     var selectDateEvents = [QueryDocumentSnapshot]()
+    let db = Firestore.firestore()
+    let userID = Auth.auth().currentUser!.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,9 +122,8 @@ extension CalendarViewController: JTAppleCalendarViewDataSource, JTAppleCalendar
         dateLabel.text = selectDateText
         
         self.selectDateEvents = [QueryDocumentSnapshot]()
-        let db = Firestore.firestore()
-        let userID = Auth.auth().currentUser!.uid
-        db.collection(userID).document("LifeStory").collection("Events").document(selectDateText).collection("DateEvents").order(by: "startDate", descending: false).addSnapshotListener { (querySnapshot, error) in
+        
+        db.collection(userID).document("LifeStory").collection("events").document(selectDateText).collection("dateEvents").order(by: "startDate", descending: false).addSnapshotListener { (querySnapshot, error) in
             if let querySnapshot = querySnapshot {
                 if self.selectDateText == self.formatter.string(from: date){
                     self.selectDateEvents = querySnapshot.documents
@@ -168,9 +168,8 @@ extension CalendarViewController: JTAppleCalendarViewDataSource, JTAppleCalendar
     //  日期裡有事件的話，在日期下方標示
     func handleCellEvents(cell: DateCell, cellState: CellState) {
         let everyCellDayDate = formatter.string(from: cellState.date)
-        let db = Firestore.firestore()
-        let userID = Auth.auth().currentUser!.uid
-        db.collection(userID).document("LifeStory").collection("Events").addSnapshotListener { (querySnapshot, error) in
+        
+        db.collection(userID).document("LifeStory").collection("events").addSnapshotListener { (querySnapshot, error) in
             if let querySnapshot = querySnapshot{
                 var dateDic = [String : String]()
                 for event in querySnapshot.documents{
@@ -208,8 +207,15 @@ extension CalendarViewController: UITableViewDataSource, UITableViewDelegate{
         return cell
     }
     
-    //  在 tableView 上往左滑可以刪除
-    //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-    //    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete{
+           let event = selectDateEvents[indexPath.row]
+            db.collection(userID).document("LifeStory").collection("events").document(selectDateText).collection("dateEvents").document(event.data()["documentID"] as! String).delete()
+            selectDateEvents.remove(at: indexPath.row)
+            eventTableView.reloadData()
+        }
+        
+    }
 }
 

@@ -15,17 +15,22 @@ import ViewAnimator
 class DiaryViewController: UIViewController {
 
     @IBOutlet weak var diaryCollectionView: UICollectionView!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     var diaries = [QueryDocumentSnapshot]()
     var isFirstGetPhotos = true
+    let db = Firestore.firestore()
+    let userID = Auth.auth().currentUser!.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.leftBarButtonItem?.tintColor = .white
+        
         diaries = [QueryDocumentSnapshot]()
-        let db = Firestore.firestore()
-        let userID = Auth.auth().currentUser!.uid
-        db.collection(userID).document("LifeStory").collection("Diaries").order(by: "Date", descending: true).addSnapshotListener { (querySnapshot, error) in
+        
+        db.collection(userID).document("LifeStory").collection("diaries").order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
             if let querySnapshot = querySnapshot {
                 if querySnapshot.documents.isEmpty{
                     self.diaries = [QueryDocumentSnapshot]()
@@ -62,7 +67,7 @@ class DiaryViewController: UIViewController {
     }
 }
 
-extension DiaryViewController: UICollectionViewDataSource {
+extension DiaryViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CollectionViewCellDelegate{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return diaries.count
@@ -72,8 +77,8 @@ extension DiaryViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "diaryCell", for: indexPath) as! DiaryCollectionViewCell
         
         let diary = diaries[indexPath.row]
-        cell.emojiView.rateValue = diary.data()["Mood"] as! Float
-        cell.titleLabel.text = diary.data()["Title"] as? String
+        cell.emojiView.rateValue = diary.data()["mood"] as! Float
+        cell.titleLabel.text = diary.data()["title"] as? String
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy年M月dd日"
@@ -82,21 +87,48 @@ extension DiaryViewController: UICollectionViewDataSource {
         let dateText = dateFormatter.string(from: Date())
         cell.dateLabel.text = dateText
         
-        cell.diaryTextView.text = diary.data()["DiaryText"] as? String
-        if let urlString = diary.data()["PhotoUrl"] as? String{
+        cell.diaryTextView.text = diary.data()["diaryText"] as? String
+        if let urlString = diary.data()["photoUrl"] as? String{
             cell.dailyImageView.kf.setImage(with: URL(string: urlString))
         }
+        
+        cell.indexPath = indexPath
+        cell.delegate = self
+        
         return cell
     }
-}
-
-extension DiaryViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: diaryCollectionView.bounds.width, height: diaryCollectionView.bounds.height)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: NSInteger) -> CGFloat {
         return -5
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        addButton.isEnabled = !editing
+        
+        let indexPaths = diaryCollectionView.indexPathsForVisibleItems
+        for indexPath in indexPaths{
+            let cell = diaryCollectionView.cellForItem(at: indexPath) as! DiaryCollectionViewCell
+            cell.deleteButton.isHidden = !editing
+        }
+    }
+    
+    func delete(at indexPath: IndexPath) {
+        let diary = diaries[indexPath.row]
+        db.collection(userID).document("LifeStory").collection("diaries").document(diary.data()["documentID"] as! String).delete { (error) in
+            if let error = error {
+                print("Error removing document: \(error)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
+        diaries.remove(at: indexPath.row)
+        diaryCollectionView.reloadData()
+        print(indexPath.row)
     }
 }

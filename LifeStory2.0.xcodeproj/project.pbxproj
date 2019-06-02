@@ -36,6 +36,7 @@
 		44D9C7E022969A0C00F2C617 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7DF22969A0C00F2C617 /* DetailCollectionViewCell.swift */; };
 		44D9C7E42296ED4900F2C617 /* AddAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7E32296ED4900F2C617 /* AddAccountViewController.swift */; };
 		44D9C7E82296EE5800F2C617 /* TypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7E72296EE5800F2C617 /* TypeCollectionViewCell.swift */; };
+		44E9F1A422A17F3400A01FEA /* DeleteCollectionCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E9F1A322A17F3400A01FEA /* DeleteCollectionCellDelegate.swift */; };
 		FB5812E8EA3D793AC3BF500A /* Pods_LifeStory2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9E75E14AAAF3EBF957B948 /* Pods_LifeStory2_0.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,7 @@
 		44D9C7DF22969A0C00F2C617 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		44D9C7E32296ED4900F2C617 /* AddAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountViewController.swift; sourceTree = "<group>"; };
 		44D9C7E72296EE5800F2C617 /* TypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCollectionViewCell.swift; sourceTree = "<group>"; };
+		44E9F1A322A17F3400A01FEA /* DeleteCollectionCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCollectionCellDelegate.swift; sourceTree = "<group>"; };
 		9F9E75E14AAAF3EBF957B948 /* Pods_LifeStory2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LifeStory2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -142,6 +144,7 @@
 				44D9C7C12296509B00F2C617 /* View */,
 				44D9C7C2229650A600F2C617 /* Controller */,
 				44D9C7DD229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift */,
+				44E9F1A322A17F3400A01FEA /* DeleteCollectionCellDelegate.swift */,
 				44D9C7B62296500A00F2C617 /* Assets.xcassets */,
 				44D9C7B82296500A00F2C617 /* LaunchScreen.storyboard */,
 				44D9C7BB2296500A00F2C617 /* Info.plist */,
@@ -403,6 +406,7 @@
 				442AD35A229796FE00FEC5D6 /* WishListViewController.swift in Sources */,
 				44D9C7E022969A0C00F2C617 /* DetailCollectionViewCell.swift in Sources */,
 				44D9C7D32296537D00F2C617 /* AddEventViewController.swift in Sources */,
+				44E9F1A422A17F3400A01FEA /* DeleteCollectionCellDelegate.swift in Sources */,
 				442EAE0D2298461300F2C9F3 /* DiaryCollectionViewCell.swift in Sources */,
 				4478781F22995C43008041A2 /* RegisterViewController.swift in Sources */,
 				44D9C7DC229697A300F2C617 /* AccountViewController.swift in Sources */,
