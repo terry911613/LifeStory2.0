@@ -14,188 +14,194 @@ import ChameleonFramework
 
 class WishListViewController: UIViewController {
     
-    @IBOutlet weak var WishListCollectionView: UICollectionView!
+    @IBOutlet weak var wishListTableView: UITableView!
     
-    var wishListArray = [QueryDocumentSnapshot]()
-    @IBOutlet var longpress: UILongPressGestureRecognizer!
+    var allUserWishList = [QueryDocumentSnapshot]()
+    var allCoEditWishList = [QueryDocumentSnapshot]()
+    var allWishList = [QueryDocumentSnapshot]()
     
-//    var p: CGPoint?
-//    var longPressed = false {
-//        didSet {
-//            if oldValue != longPressed {
-//                WishListCollectionView?.reloadData()
-//            }
-//        }
-//    }
+    let formatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        WishListCollectionView.addGestureRecognizer(longpress)
+        
+        formatter.locale = Locale(identifier: "zh_TW")
+        formatter.dateFormat = "yyyy年M月d日 a hh:mm"
+        
+        getData()
+    }
+    
+    func getData() {
         
         let db = Firestore.firestore()
-        let userID = Auth.auth().currentUser!.uid
-        db.collection(userID).document("LifeStory").collection("wishLists").order(by: "index", descending: false).addSnapshotListener { (querySnapshot, error) in
-            if let querySnapshot = querySnapshot {
-                if querySnapshot.documents.isEmpty{
-                    self.wishListArray = [QueryDocumentSnapshot]()
-                }
-                else{
-                    let documentChange = querySnapshot.documentChanges[0]
-                    if documentChange.type == .added {
-                        self.wishListArray = querySnapshot.documents
-                        self.animateWishListCollectionView()
+        if let userID = Auth.auth().currentUser?.email{
+            db.collection("LifeStory").document(userID).getDocument { (user, error) in
+                if let userData = user?.data(){
+                    if let coEditID = userData["coEditID"] as? String,
+                        let coEditStatus = userData["coEditStatus"] as? String,
+                        coEditStatus == "共同編輯中"{
+                        
+                        db.collection("LifeStory").document(userID).collection("wishLists").order(by: "index", descending: false).addSnapshotListener { (user, error) in
+                            
+                            if let user = user {
+                                if user.documents.isEmpty{
+                                    self.allWishList.removeAll()
+                                    self.allUserWishList.removeAll()
+                                    if self.allCoEditWishList.isEmpty == false{
+                                        for allCoEditWishList in self.allCoEditWishList{
+                                            self.allWishList.append(allCoEditWishList)
+                                        }
+                                    }
+                                    self.wishListTableView.reloadData()
+                                }
+                                else{
+                                    let documentChange = user.documentChanges[0]
+                                    if documentChange.type == .added {
+                                        self.allWishList.removeAll()
+                                        self.allUserWishList = user.documents
+                                        for userWishList in self.allUserWishList{
+                                            self.allWishList.append(userWishList)
+                                        }
+                                        if self.allCoEditWishList.isEmpty{
+                                            self.allCoEditWishList.removeAll()
+                                        }
+                                        else{
+                                            for coEditWishList in self.allCoEditWishList{
+                                                self.allWishList.append(coEditWishList)
+                                            }
+                                        }
+                                        self.wishListTableView.reloadData()
+                                    }
+                                }
+                            }
+                        }
+                        db.collection("LifeStory").document(coEditID).collection("wishLists").order(by: "index", descending: false).addSnapshotListener{(coEdit, error) in
+                            
+                            if let coEdit = coEdit {
+                                if coEdit.documents.isEmpty{
+                                    self.allWishList.removeAll()
+                                    self.allCoEditWishList.removeAll()
+                                    
+                                    if self.allUserWishList.isEmpty == false{
+                                        for userWishList in self.allUserWishList{
+                                            self.allWishList.append(userWishList)
+                                        }
+                                    }
+                                    self.wishListTableView.reloadData()
+                                }
+                                else{
+                                    let documentChange = coEdit.documentChanges[0]
+                                    if documentChange.type == .added {
+                                        self.allWishList.removeAll()
+                                        self.allCoEditWishList = coEdit.documents
+                                        for coEditWishList in self.allCoEditWishList{
+                                            self.allWishList.append(coEditWishList)
+                                        }
+                                        if self.allUserWishList.isEmpty{
+                                            self.allUserWishList.removeAll()
+                                        }
+                                        else{
+                                            for selfWishList in self.allUserWishList{
+                                                self.allWishList.append(selfWishList)
+                                            }
+                                        }
+                                        self.wishListTableView.reloadData()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        db.collection("LifeStory").document(userID).collection("wishLists").order(by: "index", descending: false).addSnapshotListener { (querySnapshot, error) in
+                            
+                            if let querySnapshot = querySnapshot {
+                                if querySnapshot.documents.isEmpty{
+                                    self.allWishList.removeAll()
+                                    self.wishListTableView.reloadData()
+                                }
+                                else{
+                                    let documentChange = querySnapshot.documentChanges[0]
+                                    if documentChange.type == .added {
+                                        self.allWishList = querySnapshot.documents
+                                       self.wishListTableView.reloadData()
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        animateWishListCollectionView()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let addWishListVC = segue.destination as! AddWishListViewController
-        addWishListVC.index = wishListArray.count
-    }
-    
-    @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
-        switch sender.state {
-        case .began:
-            guard let selectedIndexPath = WishListCollectionView.indexPathForItem(at: sender.location(in: WishListCollectionView)) else {
-                break
-            }
-            WishListCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-        case .changed:
-            WishListCollectionView.updateInteractiveMovementTargetPosition(sender.location(in: sender.view!))
-        case .ended:
-            WishListCollectionView.endInteractiveMovement()
-        default:
-            WishListCollectionView.cancelInteractiveMovement()
-        }
-    }
-    //  顯示特效
-    func animateWishListCollectionView(){
-        WishListCollectionView.reloadData()
-        let animations = [AnimationType.from(direction: .top, offset: 30.0)]
-        WishListCollectionView.performBatchUpdates({
-            UIView.animate(views: self.WishListCollectionView.orderedVisibleCells,
-                           animations: animations, completion: nil)
-        }, completion: nil)
+        addWishListVC.index = allWishList.count
     }
 }
 
-extension WishListViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return wishListArray.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "wishListCell", for: indexPath) as! WishListCollectionViewCell
-        
-        let wishList = wishListArray[indexPath.row]
-        cell.goalLabel.text = wishList.data()["goal"] as? String
-        cell.wishListLabel.text = wishList.data()["wishListText"] as? String
-        
-        let format = DateFormatter()
-        format.locale = Locale(identifier: "zh_TW")
-        format.dateFormat = "yyyy年MM月dd日 a hh:mm"
-        let timestamp = wishList.data()["date"] as! Timestamp
-        let date = timestamp.dateValue()
-        cell.dateLabel.text = format.string(from: date)
-        
-        if wishList.data()["goal"] as? String == "短期目標"{
-            cell.backView.backgroundColor = UIColor.flatMint()
-        }
-        else if wishList.data()["goal"] as? String == "中期目標"{
-            cell.backView.backgroundColor = UIColor.flatYellow()
-        }
-        else{
-            cell.backView.backgroundColor = UIColor.flatWatermelon()
-        }
-        
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return true
+extension WishListViewController: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allWishList.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "wishListCell", for: indexPath) as! WishListTableViewCell
         
-        let db = Firestore.firestore()
-        let userID = Auth.auth().currentUser!.uid
-        if destinationIndexPath.item > sourceIndexPath.item{
-            if destinationIndexPath.item - sourceIndexPath.item > 1{
-                for i in sourceIndexPath.item+1...destinationIndexPath.item{
-                    let wish = wishListArray[i]
-                    let index = wish.data()["index"] as! Int
-                    let ref = db.collection(userID).document("LifeStory").collection("wishLists").document(wish.data()["documentID"] as! String)
-                    ref.updateData(["index": index-1])
-                }
-                let wish = wishListArray[sourceIndexPath.item]
-                let ref = db.collection(userID).document("LifeStory").collection("wishLists").document(wish.data()["documentID"] as! String)
-                ref.updateData(["index": destinationIndexPath.item])
-            }
-            else{
-                let wishSou = wishListArray[sourceIndexPath.item]
-                let refSou = db.collection(userID).document("LifeStory").collection("wishLists").document(wishSou.data()["documentID"] as! String)
-                refSou.updateData(["index": destinationIndexPath.item])
-                
-                let wishDes = wishListArray[destinationIndexPath.item]
-                let refDes = db.collection(userID).document("LifeStory").collection("wishLists").document(wishDes.data()["documentID"] as! String)
-                refDes.updateData(["index": sourceIndexPath.item])
-            }
-        }
-        else{
-            if sourceIndexPath.item - destinationIndexPath.item > 1{
-                for i in destinationIndexPath.item...sourceIndexPath.item{
-                    let wish = wishListArray[i]
-                    let index = wish.data()["index"] as! Int
-                    let ref = db.collection(userID).document("LifeStory").collection("wishLists").document(wish.data()["documentID"] as! String)
-                    ref.updateData(["index": index+1])
-                    
-                }
-                let wish = wishListArray[sourceIndexPath.item]
-                let ref = db.collection(userID).document("LifeStory").collection("wishLists").document(wish.data()["documentID"] as! String)
-                ref.updateData(["index": destinationIndexPath.item])
-            }
-            else{
-                let wishSou = wishListArray[sourceIndexPath.item]
-                let refSou = db.collection(userID).document("LifeStory").collection("wishLists").document(wishSou.data()["documentID"] as! String)
-                refSou.updateData(["index": destinationIndexPath.item])
-                
-                let wishDes = wishListArray[destinationIndexPath.item]
-                let refDes = db.collection(userID).document("LifeStory").collection("wishLists").document(wishDes.data()["documentID"] as! String)
-                refDes.updateData(["index": sourceIndexPath.item])
-            }
+        let wishList = allWishList[indexPath.row]
+        
+        if let goal = wishList.data()["goal"] as? String,
+            let wishListText = wishList.data()["wishListText"] as? String,
+            let timestamp = wishList.data()["date"] as? Timestamp{
+            cell.goalLabel.text = goal
+            cell.wishListLabel.text = wishListText
+            cell.dateLabel.text = formatter.string(from: timestamp.dateValue())
             
+            if goal == "短期目標"{
+                cell.backView.backgroundColor = UIColor.flatMint()
+            }
+            else if goal == "中期目標"{
+                cell.backView.backgroundColor = UIColor.flatYellow()
+            }
+            else{
+                cell.backView.backgroundColor = UIColor.flatWatermelon()
+            }
         }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        let wishList = wishListArray.remove(at: sourceIndexPath.item)
-        wishListArray.insert(wishList, at: destinationIndexPath.item)
-        
-        db.collection(userID).document("LifeStory").collection("wishLists").order(by: "index", descending: false).addSnapshotListener { (querySnapshot, error) in
-            if let querySnapshot = querySnapshot {
-                if querySnapshot.documents.isEmpty{
-                    self.wishListArray = [QueryDocumentSnapshot]()
-                }
-                else{
-                    let documentChange = querySnapshot.documentChanges[0]
-                    if documentChange.type == .added {
-                        self.wishListArray = querySnapshot.documents
-                        self.WishListCollectionView.reloadData()
+        if editingStyle == .delete{
+            
+            let wishList = allWishList[indexPath.row]
+            
+            let db = Firestore.firestore()
+            if let userID = Auth.auth().currentUser?.email,
+                let documentID = wishList.data()["documentID"] as? String{
+                
+                db.collection("LifeStory").document(userID).getDocument { (user, error) in
+                    if let userData = user?.data(){
+                        if let coEditID = userData["coEditID"] as? String,
+                            let coEditStatus = userData["coEditStatus"] as? String,
+                            coEditStatus == "共同編輯中"{
+                            
+                            db.collection("LifeStory").document(userID).collection("wishLists").document(documentID).delete()
+                            db.collection("LifeStory").document(coEditID).collection("wishLists").document(documentID).delete()
+                            
+                            self.allWishList.remove(at: indexPath.row)
+                            self.wishListTableView.reloadData()
+                            
+                        }
+                        else{
+                            db.collection("LifeStory").document(userID).collection("wishLists").document(documentID).delete()
+                            
+                            self.allWishList.remove(at: indexPath.row)
+                            self.wishListTableView.reloadData()
+                        }
                     }
                 }
             }
         }
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: WishListCollectionView.bounds.width, height: WishListCollectionView.bounds.width/4)
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: NSInteger) -> CGFloat {
-        return -5
     }
 }

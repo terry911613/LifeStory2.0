@@ -19,8 +19,6 @@ class DiaryViewController: UIViewController {
     
     var diaries = [QueryDocumentSnapshot]()
     var isFirstGetPhotos = true
-    let db = Firestore.firestore()
-    let userID = Auth.auth().currentUser!.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,23 +27,25 @@ class DiaryViewController: UIViewController {
         navigationItem.leftBarButtonItem?.tintColor = .white
         
         diaries = [QueryDocumentSnapshot]()
-        
-        db.collection(userID).document("LifeStory").collection("diaries").order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
-            if let querySnapshot = querySnapshot {
-                if querySnapshot.documents.isEmpty{
-                    self.diaries = [QueryDocumentSnapshot]()
-                }
-                else{
-                    if self.isFirstGetPhotos {
-                        self.isFirstGetPhotos = false
-                        self.diaries = querySnapshot.documents
-                        self.diariesAnimateCollectionView()
+        let db = Firestore.firestore()
+        if let userID = Auth.auth().currentUser?.email{
+            db.collection("LifeStory").document(userID).collection("diaries").order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
+                if let querySnapshot = querySnapshot {
+                    if querySnapshot.documents.isEmpty{
+                        self.diaries = [QueryDocumentSnapshot]()
                     }
-                    else {
-                        let documentChange = querySnapshot.documentChanges[0]
-                        if documentChange.type == .added {
-                            self.diaries.insert(documentChange.document, at: 0)
+                    else{
+                        if self.isFirstGetPhotos {
+                            self.isFirstGetPhotos = false
+                            self.diaries = querySnapshot.documents
                             self.diariesAnimateCollectionView()
+                        }
+                        else {
+                            let documentChange = querySnapshot.documentChanges[0]
+                            if documentChange.type == .added {
+                                self.diaries.insert(documentChange.document, at: 0)
+                                self.diariesAnimateCollectionView()
+                            }
                         }
                     }
                 }
@@ -120,11 +120,15 @@ extension DiaryViewController: UICollectionViewDataSource, UICollectionViewDeleg
     
     func delete(at indexPath: IndexPath) {
         let diary = diaries[indexPath.row]
-        db.collection(userID).document("LifeStory").collection("diaries").document(diary.data()["documentID"] as! String).delete { (error) in
-            if let error = error {
-                print("Error removing document: \(error)")
-            } else {
-                print("Document successfully removed!")
+        let db = Firestore.firestore()
+        if let userID = Auth.auth().currentUser?.email,
+            let documentID = diary.data()["documentID"] as? String{
+            db.collection(userID).document("LifeStory").collection("diaries").document(documentID).delete { (error) in
+                if let error = error {
+                    print("Error removing document: \(error)")
+                } else {
+                    print("Document successfully removed!")
+                }
             }
         }
         diaries.remove(at: indexPath.row)

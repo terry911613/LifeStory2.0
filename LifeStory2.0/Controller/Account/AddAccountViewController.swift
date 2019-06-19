@@ -54,21 +54,36 @@ class AddAccountViewController: UIViewController {
         upload()
     }
     func upload() {
-        if let money = Int(self.moneyTextField.text!), let selectTypeDetail = selectTypeDetail, let selectType = selectType, let index = index{
+        
+        if let money = Int(self.moneyTextField.text!),
+            let selectType = selectType,
+            let selectTypeDetail = selectTypeDetail,
+            selectTypeDetail.isEmpty == false,
+            let index = index,
+            let userID = Auth.auth().currentUser?.email{
+            
             SVProgressHUD.show()
             let db = Firestore.firestore()
-            let timeStamp = String(Date().timeIntervalSince1970)
-            let data: [String: Any] = ["documentID": timeStamp, "index": index, "date": Date(), "money": String(money),"type": selectType, "typeDetail": selectTypeDetail]
-            let userID = Auth.auth().currentUser!.uid
-            db.collection(userID).document("LifeStory").collection("accounting").document("list").collection(selectDateText).document(timeStamp).setData(data) { (error) in
+            let documentID = String(Date().timeIntervalSince1970) + userID
+            
+            let data: [String: Any] = ["userID": userID,
+                                       "documentID": documentID,
+                                       "index": index,
+                                       "date": Date(),
+                                       "money": String(money),
+                                       "type": selectType,
+                                       "typeDetail": selectTypeDetail]
+            db.collection("LifeStory").document(userID).collection("accounting").document(selectDateText).collection("detail").document(documentID).setData(data) { (error) in
                 if let error = error {
                     print(error)
                 }
             }
-            let statusData: [String: Any] = ["date": selectDate]
-            db.collection(userID).document("LifeStory").collection("accounting").document("list").setData(statusData)
+            let statusData: [String: Any] = ["date": selectDate,
+                                             "documentID": selectDateText]
+            db.collection("LifeStory").document(userID).collection("accounting").document(selectDateText).setData(statusData)
             SVProgressHUD.dismiss()
             dismiss(animated: true, completion: nil)
+            
         }
         else{
             let alert = UIAlertController(title: "請填寫正確", message: "", preferredStyle: .alert)

@@ -20,30 +20,27 @@ class AddEventViewController: UIViewController {
     @IBOutlet weak var endTimeLabel: UILabel!
     
     let datePicker = UIDatePicker()
-    let formatter = DateFormatter()
     let dateFormatter = DateFormatter()
     let timeFormatter = DateFormatter()
-    var selectDateText = ""
-    var selectDate = Date()
+    var selectDateText: String?
     var startDate: Date?
     var endDate: Date?
-    var startDateText = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setFormatters()
-        textField.resignFirstResponder()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        startDateLabel.text = selectDateText
-        startTimeLabel.text = "選取時間"
-        endDateLabel.text = selectDateText
-        endTimeLabel.text = "選取時間"
+        
+        if let selectDateText = selectDateText{
+            startDateLabel.text = selectDateText
+            startTimeLabel.text = "選取時間"
+            endDateLabel.text = selectDateText
+            endTimeLabel.text = "選取時間"
+        }
+
     }
     func setFormatters(){
-        dateFormatter.dateFormat = "yyyy年M月dd日"
+        dateFormatter.dateFormat = "yyyy年M月d日"
         dateFormatter.locale = Locale(identifier: "zh_TW")
         dateFormatter.timeZone = TimeZone(identifier: "zh_TW")
         // 取上午或下午和小時跟分鐘（HH是24小時制，hh是12小時制）
@@ -54,11 +51,8 @@ class AddEventViewController: UIViewController {
     func getDatePicker(){
         //  顯示 datePicker 方式和大小
         datePicker.locale = Locale(identifier: "zh_TW")
-        formatter.locale = datePicker.locale
-        formatter.dateStyle = .medium
         datePicker.datePickerMode = .time
         datePicker.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 250)
-        datePicker.date = selectDate
     }
     
     @IBAction func startSelectButton(_ sender: UIButton) {
@@ -68,29 +62,19 @@ class AddEventViewController: UIViewController {
         dateAlert.view.addSubview(datePicker)
         //  警告控制器裡的確定按鈕
         let okAction = UIAlertAction(title: "確定", style: .default) { (alert: UIAlertAction) in
-            self.startTimeLabel.text = self.timeFormatter.string(from: self.datePicker.date)
-            self.startDate = self.datePicker.date
-            if let statDate = self.startDate{
-                self.startDateText = self.dateFormatter.string(from: statDate)
+            
+            if sender.tag == 0{
+                self.startTimeLabel.text = self.timeFormatter.string(from: self.datePicker.date)
+                self.startDate = self.datePicker.date
+//                if let statDate = self.startDate{
+//                    self.startDateText = self.dateFormatter.string(from: statDate)
+//                }
+                print(self.datePicker.date)
             }
-            print(self.datePicker.date)
-        }
-        dateAlert.addAction(okAction)
-        //  警告控制器裡的取消按鈕
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        dateAlert.addAction(cancelAction)
-        
-        self.present(dateAlert, animated: true, completion: nil)
-    }
-    @IBAction func endSelectButton(_ sender: UIButton) {
-        getDatePicker()
-        //  建立警告控制器顯示 datePicker
-        let dateAlert = UIAlertController(title: "\n\n\n\n\n\n\n\n\n\n\n", message: nil, preferredStyle: .actionSheet)
-        dateAlert.view.addSubview(datePicker)
-        //  警告控制器裡的確定按鈕
-        let okAction = UIAlertAction(title: "確定", style: .default) { (alert: UIAlertAction) in
-            self.endTimeLabel.text = self.timeFormatter.string(from: self.datePicker.date)
-            self.endDate = self.datePicker.date
+            else{
+                self.endTimeLabel.text = self.timeFormatter.string(from: self.datePicker.date)
+                self.endDate = self.datePicker.date
+            }
         }
         dateAlert.addAction(okAction)
         //  警告控制器裡的取消按鈕
@@ -107,20 +91,25 @@ class AddEventViewController: UIViewController {
     }
     
     func upload() {
-        if let title = self.textField.text, let startDate = startDate, let endDate = endDate{
+        if let title = self.textField.text,
+            let startDate = startDate,
+            let endDate = endDate,
+            let userID = Auth.auth().currentUser?.email,
+            let selectDateText = selectDateText{
+            
             SVProgressHUD.show()
             let db = Firestore.firestore()
-            let userID = Auth.auth().currentUser!.uid
-            let timeStamp = String(Date().timeIntervalSince1970)
-            let data: [String: Any] = ["documentID": timeStamp, "title": title, "startDate": startDate, "endDate": endDate]
-            
-            db.collection(userID).document("LifeStory").collection("events").document(selectDateText).collection("dateEvents").document(timeStamp).setData(data) { (error) in
-                if let error = error {
-                    print(error)
-                }
-            }
+            let documentID = String(Date().timeIntervalSince1970) + userID
+            let data: [String: Any] = ["userID": userID,
+                                       "documentID": documentID,
+                                       "title": title,
+                                       "startDate": startDate,
+                                       "endDate": endDate,
+                                       "date": selectDateText]
+            db.collection("LifeStory").document(userID).collection("calendar").document(selectDateText).collection("events").document(documentID).setData(data)
+        
             let statusData: [String: String] = ["date": selectDateText]
-            db.collection(userID).document("LifeStory").collection("events").document(selectDateText).setData(statusData)
+            db.collection("LifeStory").document(userID).collection("calendar").document(selectDateText).setData(statusData)
             SVProgressHUD.dismiss()
             dismiss(animated: true, completion: nil)
         }

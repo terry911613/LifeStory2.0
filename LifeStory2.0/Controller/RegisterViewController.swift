@@ -39,6 +39,12 @@ class RegisterViewController: UIViewController {
                 print("Registration Successful!")
                 SVProgressHUD.dismiss()
                 self.performSegue(withIdentifier: "registerToMain", sender: self)
+                
+                let db = Firestore.firestore()
+                if let userID = Auth.auth().currentUser?.email{
+                    db.collection("LifeStory").document(userID).setData(["userID": userID,
+                                                                         "isCoEdit": 0])
+                }
             }
         }
     }

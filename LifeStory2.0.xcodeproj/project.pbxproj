@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4402144B22A39C760071324E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4402144A22A39C760071324E /* GoogleService-Info.plist */; };
+		4412A94B22A3C6A400168F19 /* CoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4412A94A22A3C6A400168F19 /* CoEditViewController.swift */; };
+		4412A94D22A3C6B500168F19 /* EditPersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4412A94C22A3C6B500168F19 /* EditPersonalViewController.swift */; };
+		4412A94F22A3CB3300168F19 /* CheckCoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4412A94E22A3CB3300168F19 /* CheckCoEditViewController.swift */; };
 		442AD35A229796FE00FEC5D6 /* WishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442AD359229796FE00FEC5D6 /* WishListViewController.swift */; };
 		442AD35C229797E300FEC5D6 /* WishListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442AD35B229797E300FEC5D6 /* WishListCollectionViewCell.swift */; };
-		442AD3812297B01200FEC5D6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 442AD3802297B01200FEC5D6 /* GoogleService-Info.plist */; };
 		442EAE0B2298454000F2C9F3 /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442EAE0A2298454000F2C9F3 /* DiaryViewController.swift */; };
 		442EAE0D2298461300F2C9F3 /* DiaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442EAE0C2298461300F2C9F3 /* DiaryCollectionViewCell.swift */; };
 		442EAE0F22984CA000F2C9F3 /* AddDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442EAE0E22984CA000F2C9F3 /* AddDiaryViewController.swift */; };
+		4443C39A22A66A81004875D7 /* AccountingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4443C39922A66A81004875D7 /* AccountingTableViewCell.swift */; };
 		4478781B22991397008041A2 /* PersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478781A22991397008041A2 /* PersonalViewController.swift */; };
 		4478781D2299507A008041A2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478781C2299507A008041A2 /* LoginViewController.swift */; };
 		4478781F22995C43008041A2 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478781E22995C43008041A2 /* RegisterViewController.swift */; };
@@ -33,9 +37,9 @@
 		44D9C7D52296539400F2C617 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7D42296539400F2C617 /* EventTableViewCell.swift */; };
 		44D9C7DC229697A300F2C617 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7DB229697A300F2C617 /* AccountViewController.swift */; };
 		44D9C7DE229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7DD229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift */; };
-		44D9C7E022969A0C00F2C617 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7DF22969A0C00F2C617 /* DetailCollectionViewCell.swift */; };
 		44D9C7E42296ED4900F2C617 /* AddAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7E32296ED4900F2C617 /* AddAccountViewController.swift */; };
 		44D9C7E82296EE5800F2C617 /* TypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7E72296EE5800F2C617 /* TypeCollectionViewCell.swift */; };
+		44E5FA1622BA93A000CF54F0 /* WishListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E5FA1522BA93A000CF54F0 /* WishListTableViewCell.swift */; };
 		44E9F1A422A17F3400A01FEA /* DeleteCollectionCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E9F1A322A17F3400A01FEA /* DeleteCollectionCellDelegate.swift */; };
 		FB5812E8EA3D793AC3BF500A /* Pods_LifeStory2_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F9E75E14AAAF3EBF957B948 /* Pods_LifeStory2_0.framework */; };
 /* End PBXBuildFile section */
@@ -43,12 +47,16 @@
 /* Begin PBXFileReference section */
 		0A7957F4C3A84483CB488E60 /* Pods-LifeStory2.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifeStory2.0.release.xcconfig"; path = "Target Support Files/Pods-LifeStory2.0/Pods-LifeStory2.0.release.xcconfig"; sourceTree = "<group>"; };
 		377276ABA9238E9A97F83210 /* Pods-LifeStory2.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifeStory2.0.debug.xcconfig"; path = "Target Support Files/Pods-LifeStory2.0/Pods-LifeStory2.0.debug.xcconfig"; sourceTree = "<group>"; };
+		4402144A22A39C760071324E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4412A94A22A3C6A400168F19 /* CoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoEditViewController.swift; sourceTree = "<group>"; };
+		4412A94C22A3C6B500168F19 /* EditPersonalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalViewController.swift; sourceTree = "<group>"; };
+		4412A94E22A3CB3300168F19 /* CheckCoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckCoEditViewController.swift; sourceTree = "<group>"; };
 		442AD359229796FE00FEC5D6 /* WishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListViewController.swift; sourceTree = "<group>"; };
 		442AD35B229797E300FEC5D6 /* WishListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListCollectionViewCell.swift; sourceTree = "<group>"; };
-		442AD3802297B01200FEC5D6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		442EAE0A2298454000F2C9F3 /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		442EAE0C2298461300F2C9F3 /* DiaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCollectionViewCell.swift; sourceTree = "<group>"; };
 		442EAE0E22984CA000F2C9F3 /* AddDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDiaryViewController.swift; sourceTree = "<group>"; };
+		4443C39922A66A81004875D7 /* AccountingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountingTableViewCell.swift; sourceTree = "<group>"; };
 		4478781A22991397008041A2 /* PersonalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalViewController.swift; sourceTree = "<group>"; };
 		4478781C2299507A008041A2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4478781E22995C43008041A2 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -71,9 +79,9 @@
 		44D9C7D42296539400F2C617 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		44D9C7DB229697A300F2C617 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		44D9C7DD229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
-		44D9C7DF22969A0C00F2C617 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		44D9C7E32296ED4900F2C617 /* AddAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountViewController.swift; sourceTree = "<group>"; };
 		44D9C7E72296EE5800F2C617 /* TypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCollectionViewCell.swift; sourceTree = "<group>"; };
+		44E5FA1522BA93A000CF54F0 /* WishListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishListTableViewCell.swift; sourceTree = "<group>"; };
 		44E9F1A322A17F3400A01FEA /* DeleteCollectionCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCollectionCellDelegate.swift; sourceTree = "<group>"; };
 		9F9E75E14AAAF3EBF957B948 /* Pods_LifeStory2_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LifeStory2_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -94,16 +102,66 @@
 			isa = PBXGroup;
 			children = (
 				442EAE0A2298454000F2C9F3 /* DiaryViewController.swift */,
-				442EAE0C2298461300F2C9F3 /* DiaryCollectionViewCell.swift */,
 				442EAE0E22984CA000F2C9F3 /* AddDiaryViewController.swift */,
 			);
 			path = Diary;
+			sourceTree = "<group>";
+		};
+		447264DB22B8CF3E005F91ED /* Personal */ = {
+			isa = PBXGroup;
+			children = (
+				44D9C7CB2296512B00F2C617 /* Personal.storyboard */,
+			);
+			path = Personal;
+			sourceTree = "<group>";
+		};
+		447264DC22B8CF57005F91ED /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				44D9C7C92296511D00F2C617 /* Diary.storyboard */,
+				442EAE0C2298461300F2C9F3 /* DiaryCollectionViewCell.swift */,
+			);
+			path = Diary;
+			sourceTree = "<group>";
+		};
+		447264DD22B8CF6C005F91ED /* WishList */ = {
+			isa = PBXGroup;
+			children = (
+				44D9C7C72296511100F2C617 /* WishList.storyboard */,
+				442AD35B229797E300FEC5D6 /* WishListCollectionViewCell.swift */,
+				44E5FA1522BA93A000CF54F0 /* WishListTableViewCell.swift */,
+				44B1EA6822982065004E5587 /* StatusCollectionViewCell.swift */,
+			);
+			path = WishList;
+			sourceTree = "<group>";
+		};
+		447264DE22B8CF88005F91ED /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				44D9C7C52296510700F2C617 /* Account.storyboard */,
+				44D9C7E72296EE5800F2C617 /* TypeCollectionViewCell.swift */,
+				4443C39922A66A81004875D7 /* AccountingTableViewCell.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		447264DF22B8CFA6005F91ED /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				44D9C7C3229650E600F2C617 /* Calendar.storyboard */,
+				44D9C7D02296536200F2C617 /* DateCell.swift */,
+				44D9C7D42296539400F2C617 /* EventTableViewCell.swift */,
+			);
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 		4478781922991349008041A2 /* Personal */ = {
 			isa = PBXGroup;
 			children = (
 				4478781A22991397008041A2 /* PersonalViewController.swift */,
+				4412A94A22A3C6A400168F19 /* CoEditViewController.swift */,
+				4412A94E22A3CB3300168F19 /* CheckCoEditViewController.swift */,
+				4412A94C22A3C6B500168F19 /* EditPersonalViewController.swift */,
 			);
 			path = Personal;
 			sourceTree = "<group>";
@@ -112,9 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				442AD359229796FE00FEC5D6 /* WishListViewController.swift */,
-				442AD35B229797E300FEC5D6 /* WishListCollectionViewCell.swift */,
 				44B1EA6522981F88004E5587 /* AddWishListViewController.swift */,
-				44B1EA6822982065004E5587 /* StatusCollectionViewCell.swift */,
 			);
 			path = WishList;
 			sourceTree = "<group>";
@@ -148,7 +204,7 @@
 				44D9C7B62296500A00F2C617 /* Assets.xcassets */,
 				44D9C7B82296500A00F2C617 /* LaunchScreen.storyboard */,
 				44D9C7BB2296500A00F2C617 /* Info.plist */,
-				442AD3802297B01200FEC5D6 /* GoogleService-Info.plist */,
+				4402144A22A39C760071324E /* GoogleService-Info.plist */,
 			);
 			path = LifeStory2.0;
 			sourceTree = "<group>";
@@ -157,11 +213,11 @@
 			isa = PBXGroup;
 			children = (
 				44D9C7B32296500800F2C617 /* Main.storyboard */,
-				44D9C7C3229650E600F2C617 /* Calendar.storyboard */,
-				44D9C7C52296510700F2C617 /* Account.storyboard */,
-				44D9C7C72296511100F2C617 /* WishList.storyboard */,
-				44D9C7C92296511D00F2C617 /* Diary.storyboard */,
-				44D9C7CB2296512B00F2C617 /* Personal.storyboard */,
+				447264DF22B8CFA6005F91ED /* Calendar */,
+				447264DE22B8CF88005F91ED /* Account */,
+				447264DD22B8CF6C005F91ED /* WishList */,
+				447264DC22B8CF57005F91ED /* Diary */,
+				447264DB22B8CF3E005F91ED /* Personal */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -184,9 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				44D9C7B12296500800F2C617 /* CalendarViewController.swift */,
-				44D9C7D02296536200F2C617 /* DateCell.swift */,
 				44D9C7D22296537D00F2C617 /* AddEventViewController.swift */,
-				44D9C7D42296539400F2C617 /* EventTableViewCell.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -195,9 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				44D9C7DB229697A300F2C617 /* AccountViewController.swift */,
-				44D9C7DF22969A0C00F2C617 /* DetailCollectionViewCell.swift */,
 				44D9C7E32296ED4900F2C617 /* AddAccountViewController.swift */,
-				44D9C7E72296EE5800F2C617 /* TypeCollectionViewCell.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -282,7 +334,7 @@
 			files = (
 				44D9C7C4229650E600F2C617 /* Calendar.storyboard in Resources */,
 				44D9C7C62296510700F2C617 /* Account.storyboard in Resources */,
-				442AD3812297B01200FEC5D6 /* GoogleService-Info.plist in Resources */,
+				4402144B22A39C760071324E /* GoogleService-Info.plist in Resources */,
 				44D9C7BA2296500A00F2C617 /* LaunchScreen.storyboard in Resources */,
 				44D9C7B72296500A00F2C617 /* Assets.xcassets in Resources */,
 				44D9C7B52296500800F2C617 /* Main.storyboard in Resources */,
@@ -398,22 +450,26 @@
 			files = (
 				44D9C7E82296EE5800F2C617 /* TypeCollectionViewCell.swift in Sources */,
 				442EAE0B2298454000F2C9F3 /* DiaryViewController.swift in Sources */,
+				44E5FA1622BA93A000CF54F0 /* WishListTableViewCell.swift in Sources */,
 				44D9C7B22296500800F2C617 /* CalendarViewController.swift in Sources */,
 				44D9C7E42296ED4900F2C617 /* AddAccountViewController.swift in Sources */,
 				4478781D2299507A008041A2 /* LoginViewController.swift in Sources */,
 				4478781B22991397008041A2 /* PersonalViewController.swift in Sources */,
 				44D9C7DE229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift in Sources */,
 				442AD35A229796FE00FEC5D6 /* WishListViewController.swift in Sources */,
-				44D9C7E022969A0C00F2C617 /* DetailCollectionViewCell.swift in Sources */,
 				44D9C7D32296537D00F2C617 /* AddEventViewController.swift in Sources */,
 				44E9F1A422A17F3400A01FEA /* DeleteCollectionCellDelegate.swift in Sources */,
+				4443C39A22A66A81004875D7 /* AccountingTableViewCell.swift in Sources */,
 				442EAE0D2298461300F2C9F3 /* DiaryCollectionViewCell.swift in Sources */,
 				4478781F22995C43008041A2 /* RegisterViewController.swift in Sources */,
 				44D9C7DC229697A300F2C617 /* AccountViewController.swift in Sources */,
 				442AD35C229797E300FEC5D6 /* WishListCollectionViewCell.swift in Sources */,
+				4412A94F22A3CB3300168F19 /* CheckCoEditViewController.swift in Sources */,
+				4412A94D22A3C6B500168F19 /* EditPersonalViewController.swift in Sources */,
 				44D9C7D12296536200F2C617 /* DateCell.swift in Sources */,
 				442EAE0F22984CA000F2C9F3 /* AddDiaryViewController.swift in Sources */,
 				44D9C7D52296539400F2C617 /* EventTableViewCell.swift in Sources */,
+				4412A94B22A3C6A400168F19 /* CoEditViewController.swift in Sources */,
 				44D9C7B02296500800F2C617 /* AppDelegate.swift in Sources */,
 				44B1EA6922982065004E5587 /* StatusCollectionViewCell.swift in Sources */,
 				44B1EA6622981F88004E5587 /* AddWishListViewController.swift in Sources */,

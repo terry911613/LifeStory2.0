@@ -57,7 +57,6 @@ class AddDiaryViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     func upload() {
         SVProgressHUD.show()
-        let db = Firestore.firestore()
         let storageReference = Storage.storage().reference()
         let fileReference = storageReference.child(UUID().uuidString + ".jpg")
         if let image = self.photoButton.image(for: .normal){
@@ -86,17 +85,25 @@ class AddDiaryViewController: UIViewController, UIImagePickerControllerDelegate,
                         SVProgressHUD.dismiss()
                         return
                     }
-                    let timeStamp = String(Date().timeIntervalSince1970)
-                    let data: [String: Any] = ["documentID": timeStamp, "date": Date(), "dateString": self.todayDateString, "photoUrl": downloadURL.absoluteString, "title": self.titleTextField.text!, "mood": self.rate, "diaryText": self.diaryTextView.text!]
-                    let userID = Auth.auth().currentUser!.uid
-                    db.collection(userID).document("LifeStory").collection("diaries").document(timeStamp).setData(data, completion: { (error) in
-                        guard error == nil else {
+                    let db = Firestore.firestore()
+                    if let userID = Auth.auth().currentUser?.email{
+                        let documentID = String(Date().timeIntervalSince1970) + userID
+                        let data: [String: Any] = ["documentID": documentID,
+                                                   "date": Date(),
+                                                   "dateString": self.todayDateString,
+                                                   "photoUrl": downloadURL.absoluteString,
+                                                   "title": self.titleTextField.text!,
+                                                   "mood": self.rate,
+                                                   "diaryText": self.diaryTextView.text!]
+                        db.collection("LifeStory").document(userID).collection("diaries").document(documentID).setData(data, completion: { (error) in
+                            guard error == nil else {
+                                SVProgressHUD.dismiss()
+                                return
+                            }
                             SVProgressHUD.dismiss()
-                            return
-                        }
-                        SVProgressHUD.dismiss()
-                        self.navigationController?.popViewController(animated: true)
-                    })
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                    }
                 })
             }
         }

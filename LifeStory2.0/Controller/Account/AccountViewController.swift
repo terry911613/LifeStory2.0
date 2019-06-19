@@ -14,10 +14,9 @@ import ChameleonFramework
 
 class AccountViewController: UIViewController {
     
+    @IBOutlet weak var accountingTableView: UITableView!
     @IBOutlet weak var totalExpenditureLabel: UILabel!
     @IBOutlet weak var totalIncomeLabel: UILabel!
-    @IBOutlet weak var accountingCollectionView: UICollectionView!
-    @IBOutlet var longPress: UILongPressGestureRecognizer!
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var dateLabel: UILabel!
     
@@ -25,67 +24,178 @@ class AccountViewController: UIViewController {
     var selectDateText = ""
     var selectDate = Date()
     let formatter: DateFormatter = DateFormatter()
-    var selectDateAccounting = [QueryDocumentSnapshot]()
+    var allAccounting = [QueryDocumentSnapshot]()
+    var allUserAccounting = [QueryDocumentSnapshot]()
+    var allCoEditAccounting = [QueryDocumentSnapshot]()
     let datePicker = UIDatePicker()
-    let db = Firestore.firestore()
-    let userID = Auth.auth().currentUser!.uid
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItems = [addButton, editButtonItem]
-        editButtonItem.tintColor = .white
-        addButton.tintColor = .white
-//        navigationItem.rightBarButtonItem?.tintColor = .white
-        
-        formatter.dateFormat = "yyyy年M月dd日"
+        formatter.dateFormat = "yyyy年M月d日"
         formatter.locale = Locale(identifier: "zh_TW")
         formatter.timeZone = TimeZone(identifier: "zh_TW")
         selectDateText = formatter.string(from: now)
         dateLabel.text = selectDateText
         
-        db.collection(userID).document("LifeStory").collection("accounting").document("list").collection(self.selectDateText).order(by: "date", descending: true).addSnapshotListener { (querySnapshot, error) in
-            if let querySnapshot = querySnapshot {
-                if querySnapshot.documents.isEmpty{
-                    self.selectDateAccounting = [QueryDocumentSnapshot]()
-                    self.totalExpenditureLabel.text = ""
-                    self.totalIncomeLabel.text = ""
-                }
-                else{
-                    let documentChange = querySnapshot.documentChanges[0]
-                    if documentChange.type == .added {
-                        if self.selectDateText == self.formatter.string(from: self.datePicker.date){
-                            self.selectDateAccounting = querySnapshot.documents
-                            self.animateCollectionView()
+        getAccounting(date: selectDateText)
+    }
+    
+    func getAccounting(date: String){
+        
+        allAccounting.removeAll()
+        accountingTableView.reloadData()
+        
+        let db = Firestore.firestore()
+        if let userID = Auth.auth().currentUser?.email{
+            db.collection("LifeStory").document(userID).getDocument { (user, error) in
+                if let userData = user?.data(){
+                    if let coEditID = userData["coEditID"] as? String,
+                        let coEditStatus = userData["coEditStatus"] as? String,
+                        coEditStatus == "共同編輯中"{
+                        db.collection("LifeStory").document(userID).collection("accounting").document(date).collection("detail").addSnapshotListener { (user, error) in
+                            
+                            if let user = user{
+                                if user.documents.isEmpty{
+                                    self.allAccounting.removeAll()
+                                    self.allUserAccounting.removeAll()
+                                    self.accountingTableView.reloadData()
+//                                    self.totalExpenditureAndIncome()
+                                    if self.allCoEditAccounting.isEmpty == false{
+                                        for coEditAccounting in self.allCoEditAccounting{
+                                            self.allAccounting.append(coEditAccounting)
+                                            self.accountingTableView.reloadData()
+//                                            self.totalExpenditureAndIncome()
+                                        }
+                                    }
+                                    self.totalExpenditureAndIncome()
+                                }
+                                else{
+                                    let documentChange = user.documentChanges[0]
+                                    if documentChange.type == .added {
+                                        self.allAccounting.removeAll()
+                                        self.accountingTableView.reloadData()
+                                        self.allUserAccounting = user.documents
+                                        for userAccounting in self.allUserAccounting{
+                                            self.allAccounting.append(userAccounting)
+                                            self.accountingTableView.reloadData()
+//                                            self.totalExpenditureAndIncome()
+                                        }
+//                                        self.totalExpenditureAndIncome()
+                                        if self.allCoEditAccounting.isEmpty{
+                                            self.allCoEditAccounting.removeAll()
+                                        }
+                                        else{
+                                            for coEditAccounting in self.allCoEditAccounting{
+                                                self.allAccounting.append(coEditAccounting)
+                                                self.accountingTableView.reloadData()
+//                                                self.totalExpenditureAndIncome()
+                                            }
+//                                            self.totalExpenditureAndIncome()
+                                        }
+                                    }
+                                    self.totalExpenditureAndIncome()
+                                }
+                            }
+                        }
+                        db.collection("LifeStory").document(coEditID).collection("accounting").document(date).collection("detail").addSnapshotListener{(coEdit, error) in
+                            
+                            if let coEdit = coEdit{
+                                if coEdit.documents.isEmpty{
+                                    self.allAccounting.removeAll()
+                                    self.allCoEditAccounting.removeAll()
+                                    self.accountingTableView.reloadData()
+                                    if self.allUserAccounting.isEmpty == false{
+                                        for userAccounting in self.allUserAccounting{
+                                            self.allAccounting.append(userAccounting)
+                                            self.accountingTableView.reloadData()
+//                                            self.totalExpenditureAndIncome()
+                                        }
+//                                        self.totalExpenditureAndIncome()
+                                    }
+                                    self.totalExpenditureAndIncome()
+                                }
+                                else{
+                                    let documentChange = coEdit.documentChanges[0]
+                                    if documentChange.type == .added {
+                                        self.allAccounting.removeAll()
+                                        self.accountingTableView.reloadData()
+                                        self.allCoEditAccounting = coEdit.documents
+                                        for coEditAccounting in self.allCoEditAccounting{
+                                            self.allAccounting.append(coEditAccounting)
+                                            self.accountingTableView.reloadData()
+//                                            self.totalExpenditureAndIncome()
+                                        }
+//                                        self.totalExpenditureAndIncome()
+                                        if self.allUserAccounting.isEmpty{
+                                            self.allUserAccounting.removeAll()
+                                        }
+                                        else{
+                                            for userAccounting in self.allUserAccounting{
+                                                self.allAccounting.append(userAccounting)
+                                                self.accountingTableView.reloadData()
+//                                                self.totalExpenditureAndIncome()
+                                            }
+//                                            self.totalExpenditureAndIncome()
+                                        }
+                                    }
+                                    self.totalExpenditureAndIncome()
+                                }
+                            }
                         }
                     }
-                    var totalExpenditure = 0
-                    var totalIncome = 0
-                    for accounting in querySnapshot.documents{
-                        if accounting.data()["type"] as! String == "expenditure"{
-                            let expenditureMoney = accounting.data()["money"] as! String
-                            totalExpenditure += Int(expenditureMoney)!
-                        }
-                        else{
-                            let incomeMoney = accounting.data()["money"] as! String
-                            totalIncome += Int(incomeMoney)!
+                    else{
+                        db.collection("LifeStory").document(userID).collection("accounting").document(date).collection("detail").order(by: "date", descending: true).addSnapshotListener { (userAccounting, error) in
+                            if let userAccounting = userAccounting {
+                                if userAccounting.documents.isEmpty{
+                                    self.allAccounting.removeAll()
+                                    self.accountingTableView.reloadData()
+                                    self.totalExpenditureLabel.text = ""
+                                    self.totalIncomeLabel.text = ""
+                                }
+                                else{
+                                    let documentChange = userAccounting.documentChanges[0]
+                                    if documentChange.type == .added {
+                                        self.allAccounting = userAccounting.documents
+                                        self.accountingTableView.reloadData()
+                                        self.totalExpenditureAndIncome()
+                                    }
+                                }
+                            }
                         }
                     }
-                    self.totalExpenditureLabel.text = "-$\(totalExpenditure)"
-                    self.totalIncomeLabel.text = "$\(totalIncome)"
                 }
             }
         }
+        
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        animateCollectionView()
+    
+    func totalExpenditureAndIncome(){
+        var totalExpenditure = 0
+        var totalIncome = 0
+        if allAccounting.isEmpty{
+            self.totalExpenditureLabel.text = ""
+            self.totalIncomeLabel.text = ""
+        }
+        else{
+            for accounting in allAccounting{
+                if accounting.data()["type"] as! String == "expenditure"{
+                    let expenditureMoney = accounting.data()["money"] as! String
+                    totalExpenditure += Int(expenditureMoney)!
+                }
+                else{
+                    let incomeMoney = accounting.data()["money"] as! String
+                    totalIncome += Int(incomeMoney)!
+                }
+            }
+            self.totalExpenditureLabel.text = "-$\(totalExpenditure)"
+            self.totalIncomeLabel.text = "$\(totalIncome)"
+        }
     }
+    
     @IBAction func clickDate(_ sender: UIBarButtonItem) {
-        let dateFormatter = DateFormatter()
-        datePicker.locale = Locale(identifier: "zh_TW")
-        dateFormatter.locale = datePicker.locale
-        dateFormatter.dateStyle = .medium
+        datePicker.locale = formatter.locale
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 250)
         
@@ -95,43 +205,11 @@ class AccountViewController: UIViewController {
         let okAction = UIAlertAction(title: "確定", style: .default) { (alert: UIAlertAction) in
             
             // 按下確定，讓標題改成選取到的日期
-            self.selectDateText = dateFormatter.string(from: self.datePicker.date)
+            self.selectDateText = self.formatter.string(from: self.datePicker.date)
             self.dateLabel.text = self.selectDateText
             self.selectDate = self.datePicker.date
-            self.db.collection(self.userID).document("LifeStory").collection("accounting").document("list").collection(self.selectDateText).order(by: "index", descending: true).addSnapshotListener { (querySnapshot, error) in
-                if let querySnapshot = querySnapshot {
-                    if querySnapshot.documents.isEmpty{
-                        self.selectDateAccounting = [QueryDocumentSnapshot]()
-                        self.accountingCollectionView.reloadData()
-                        self.totalExpenditureLabel.text = ""
-                        self.totalIncomeLabel.text = ""
-                    }
-                    else{
-                        let documentChange = querySnapshot.documentChanges[0]
-                        if documentChange.type == .added {
-                            if self.selectDateText == self.formatter.string(from: self.datePicker.date){
-                                self.selectDateAccounting = querySnapshot.documents
-                                self.animateCollectionView()
-                            }
-                        }
-                        var totalExpenditure = 0
-                        var totalIncome = 0
-                        for accounting in querySnapshot.documents{
-                            if accounting.data()["type"] as! String == "expenditure"{
-                                let expenditureMoney = accounting.data()["money"] as! String
-                                totalExpenditure += Int(expenditureMoney)!
-                            }
-                            else{
-                                let incomeMoney = accounting.data()["money"] as! String
-                                totalIncome += Int(incomeMoney)!
-                            }
-                        }
-                        self.totalExpenditureLabel.text = "-$\(totalExpenditure)"
-                        self.totalIncomeLabel.text = "$\(totalIncome)"
-                    }
-                    
-                }
-            }
+            
+            self.getAccounting(date: self.selectDateText)
         }
         dateAlert.addAction(okAction)
         //  警告控制器裡的取消按鈕
@@ -141,13 +219,10 @@ class AccountViewController: UIViewController {
         self.present(dateAlert, animated: true, completion: nil)
     }
     //  顯示特效
-    func animateCollectionView(){
-        accountingCollectionView.reloadData()
+    func animateTableView(){
         let animations = [AnimationType.from(direction: .top, offset: 30.0)]
-        accountingCollectionView.performBatchUpdates({
-            UIView.animate(views: self.accountingCollectionView.orderedVisibleCells,
-                           animations: animations, completion: nil)
-        }, completion: nil)
+        accountingTableView.reloadData()
+        UIView.animate(views: accountingTableView.visibleCells, animations: animations, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -155,24 +230,21 @@ class AccountViewController: UIViewController {
             let addAccountVC = segue.destination as! AddAccountViewController
             addAccountVC.selectDateText = selectDateText
             addAccountVC.selectDate = selectDate
-            addAccountVC.index = selectDateAccounting.count
+            addAccountVC.index = allAccounting.count
         }
     }
 }
 
-extension AccountViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, CollectionViewCellDelegate {
+extension AccountViewController: UITableViewDelegate, UITableViewDataSource{
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectDateAccounting.count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allAccounting.count
     }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "accountingCell", for: indexPath) as! DetailCollectionViewCell
-        cell.indexPath = indexPath
-        cell.delegate = self
-        
-        let accounting = selectDateAccounting[indexPath.row]
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "accountingCell", for: indexPath) as! AccountingTableViewCell
+        let accounting = allAccounting[indexPath.row]
+        print(allAccounting.count)
         if let money = accounting.data()["money"] as? String{
             if accounting.data()["type"] as? String == "expenditure"{
                 cell.moneyLabel.text = "-$\(money)"
@@ -184,41 +256,66 @@ extension AccountViewController: UICollectionViewDataSource, UICollectionViewDel
             }
         }
         cell.typeDetailLabel.text = accounting.data()["typeDetail"] as? String
+        cell.userLabel.text = accounting.data()["userID"] as? String
         
         return cell
     }
-    
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        addButton.isEnabled = !editing
-        
-        let indexPaths = accountingCollectionView.indexPathsForVisibleItems
-        for indexPath in indexPaths{
-            let cell = accountingCollectionView.cellForItem(at: indexPath) as! DetailCollectionViewCell
-            cell.deleteViewButton.isHidden = !editing
-        }
-        
-    }
-
-    func delete(at indexPath: IndexPath) {
-        let accounting = selectDateAccounting[indexPath.row]
-        db.collection(userID).document("LifeStory").collection("accounting").document("list").collection(self.selectDateText).document(accounting.data()["documentID"] as! String).delete { (error) in
-            if let error = error {
-                print("Error removing document: \(error)")
-            } else {
-                print("Document successfully removed!")
+        if editingStyle == .delete{
+            
+            let accounting = allAccounting[indexPath.row]
+            
+            let db = Firestore.firestore()
+            if let userID = Auth.auth().currentUser?.email,
+                let documentID = accounting.data()["documentID"] as? String{
+                
+                db.collection("LifeStory").document(userID).getDocument { (user, error) in
+                    if let userData = user?.data(){
+                        if let coEditID = userData["coEditID"] as? String,
+                            let coEditStatus = userData["coEditStatus"] as? String,
+                            coEditStatus == "共同編輯中"{
+                            
+                            db.collection("LifeStory").document(userID).collection("accounting").document(self.selectDateText).collection("detail").document(documentID).delete()
+                            db.collection("LifeStory").document(coEditID).collection("accounting").document(self.selectDateText).collection("detail").document(documentID).delete()
+                            
+                            self.allAccounting.remove(at: indexPath.row)
+                            self.accountingTableView.reloadData()
+                            
+                            db.collection("LifeStory").document(userID).collection("accounting").document(self.selectDateText).collection("detail").getDocuments(completion: { (user, error) in
+                                if let user = user {
+                                    if user.documents.isEmpty{
+                                        db.collection("LifeStory").document(userID).collection("accounting").document(self.selectDateText).delete()
+                                    }
+                                }
+                            })
+                            db.collection("LifeStory").document(coEditID).collection("accounting").document(self.selectDateText).collection("detail").getDocuments(completion: { (coEdit, error) in
+                                if let coEdit = coEdit{
+                                    if coEdit.documents.isEmpty{
+                                        db.collection("LifeStory").document(coEditID).collection("accounting").document(self.selectDateText).delete()
+                                    }
+                                }
+                            })
+                            
+                            
+                        }
+                        else{
+                            db.collection("LifeStory").document(userID).collection("accounting").document(self.selectDateText).collection("detail").document(documentID).delete()
+                            
+                            self.allAccounting.remove(at: indexPath.row)
+                            self.accountingTableView.reloadData()
+                            
+                            db.collection("LifeStory").document(userID).collection("accounting").document(self.selectDateText).collection("detail").getDocuments(completion: { (user, error) in
+                                if let user = user{
+                                    if user.documents.isEmpty{
+                                        db.collection("LifeStory").document(userID).collection("accounting").document(self.selectDateText).delete()
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
             }
         }
-        selectDateAccounting.remove(at: indexPath.row)
-        accountingCollectionView.reloadData()
-        print(indexPath.row)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: accountingCollectionView.bounds.width, height: accountingCollectionView.bounds.width/4)
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: NSInteger) -> CGFloat {
-        return -5
     }
 }

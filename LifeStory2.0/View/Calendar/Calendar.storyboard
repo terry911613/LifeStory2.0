@@ -188,12 +188,20 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVc-ev-H2A">
+                                                            <rect key="frame" x="331" y="27" width="38" height="18"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.16821733117103577" green="0.30624192953109741" blue="0.18358390033245087" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="vAU-9Z-Gzt" firstAttribute="leading" secondItem="yK2-qk-By3" secondAttribute="leading" constant="20" id="19m-a4-ki1"/>
                                                         <constraint firstAttribute="bottom" secondItem="vAU-9Z-Gzt" secondAttribute="bottom" constant="8" id="8yq-dY-F3t"/>
+                                                        <constraint firstAttribute="bottom" secondItem="LVc-ev-H2A" secondAttribute="bottom" constant="5" id="CXr-ku-JT7"/>
                                                         <constraint firstItem="GnJ-pY-HWq" firstAttribute="leading" secondItem="XRX-Ag-dUk" secondAttribute="trailing" constant="20" id="DBE-WG-5Z2"/>
+                                                        <constraint firstAttribute="trailing" secondItem="LVc-ev-H2A" secondAttribute="trailing" constant="5" id="ImA-Dx-HCy"/>
                                                         <constraint firstItem="XRX-Ag-dUk" firstAttribute="leading" secondItem="yK2-qk-By3" secondAttribute="leading" constant="20" id="n0g-LY-lRw"/>
                                                         <constraint firstItem="XRX-Ag-dUk" firstAttribute="top" secondItem="yK2-qk-By3" secondAttribute="top" constant="8" id="uH8-Fv-btC"/>
                                                         <constraint firstItem="GnJ-pY-HWq" firstAttribute="centerY" secondItem="yK2-qk-By3" secondAttribute="centerY" id="w96-mF-rnV"/>
@@ -217,6 +225,7 @@
                                             <outlet property="endTimeLabel" destination="vAU-9Z-Gzt" id="dru-9t-jrp"/>
                                             <outlet property="eventTitleLabel" destination="GnJ-pY-HWq" id="viU-za-PbA"/>
                                             <outlet property="startTimeLabel" destination="XRX-Ag-dUk" id="tAj-0h-aag"/>
+                                            <outlet property="userLabel" destination="LVc-ev-H2A" id="QwS-pw-efR"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -255,7 +264,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zq3-vh-joz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2110.144927536232" y="-301.63043478260875"/>
+            <point key="canvasLocation" x="1913" y="-285"/>
         </scene>
         <!--Add Event View Controller-->
         <scene sceneID="J3R-PR-IIl">
@@ -373,7 +382,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NEk-I8-3Nc">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NEk-I8-3Nc">
                                                 <rect key="frame" x="0.0" y="0.0" width="150" height="60"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
@@ -381,7 +390,7 @@
                                                     <constraint firstAttribute="height" constant="60" id="v8i-Rz-Mot"/>
                                                 </constraints>
                                                 <connections>
-                                                    <action selector="endSelectButton:" destination="CcM-ke-aoj" eventType="touchUpInside" id="krZ-Ut-kZW"/>
+                                                    <action selector="startSelectButton:" destination="CcM-ke-aoj" eventType="touchUpInside" id="5eS-Dg-qud"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -488,7 +497,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iiF-vp-vm2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2915.9420289855075" y="-302.44565217391306"/>
+            <point key="canvasLocation" x="2623" y="-285"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rug-Wd-pE5">

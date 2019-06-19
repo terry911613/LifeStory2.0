@@ -23,7 +23,6 @@ class AddWishListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     @IBAction func cancelButton(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
@@ -35,18 +34,24 @@ class AddWishListViewController: UIViewController {
         if let wishText = self.wishListTextField.text, wishText.isEmpty == false, selectGoal.isEmpty == false, let index = index{
             SVProgressHUD.show()
             let db = Firestore.firestore()
-            let userID = Auth.auth().currentUser!.uid
-            let timeStamp = String(Date().timeIntervalSince1970)
-            let data: [String: Any] = ["documentID": timeStamp, "index": index, "wishListText": wishText, "goal": selectGoal, "date": Date()]
-            db.collection(userID).document("LifeStory").collection("wishLists").document(timeStamp).setData(data) { (error) in
-                if let error = error {
-                    print("Error writing document: \(error)")
-                } else {
-                    print("Document successfully written!")
+            if let userID = Auth.auth().currentUser?.email{
+                let documentID = String(Date().timeIntervalSince1970) + userID
+                let data: [String: Any] = ["userID": userID,
+                                           "documentID": documentID,
+                                           "index": index,
+                                           "wishListText": wishText,
+                                           "goal": selectGoal,
+                                           "date": Date()]
+                db.collection("LifeStory").document(userID).collection("wishLists").document(documentID).setData(data) { (error) in
+                    if let error = error {
+                        print("Error writing document: \(error)")
+                    } else {
+                        print("Document successfully written!")
+                    }
                 }
+                SVProgressHUD.dismiss()
+                dismiss(animated: true, completion: nil)
             }
-            SVProgressHUD.dismiss()
-            dismiss(animated: true, completion: nil)
         }
         else{
             let alert = UIAlertController(title: "請填寫完整", message: "", preferredStyle: .alert)
