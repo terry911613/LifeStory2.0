@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>223608182487-9asj4fol5drfvdi043b7ua37sgn6sknh.apps.googleusercontent.com</string>
+	<string></string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string></string>
 	<key>API_KEY</key>
-	<string>AIzaSyCwvwvWbsVn_rgw_MN2QUAgnSk3Sz2Vr6o</string>
+	<string></string>
 	<key>GCM_SENDER_ID</key>
-	<string>223608182487</string>
+	<string></string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:223608182487:ios:5de9ee6c941da214</string>
+	<string></string>
 	<key>DATABASE_URL</key>
 	<string>https://calendar-cb811.firebaseio.com</string>
 </dict>
