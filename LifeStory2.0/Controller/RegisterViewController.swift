@@ -19,7 +19,8 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        emailTextfield.text = ""
+        passwordTextfield.text = ""
     }
     
     @IBAction func registerButton(_ sender: UIButton) {

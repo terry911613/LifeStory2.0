@@ -82,10 +82,8 @@ class CalendarViewController: UIViewController {
                                     if documentChange.type == .added {
                                         for event in user.documents{
                                             if let eventDate = event.data()["date"] as? String{
-                                                print(eventDate)
                                                 self.dateDic[eventDate] = "yes"
                                                 self.calendarView.reloadData()
-                                                print(self.dateDic)
                                             }
                                         }
                                     }
@@ -101,10 +99,8 @@ class CalendarViewController: UIViewController {
                                     if documentChange.type == .added {
                                         for event in coEdit.documents{
                                             if let eventDate = event.data()["date"] as? String{
-                                                print(eventDate)
                                                 self.dateDic[eventDate] = "yes"
                                                 self.calendarView.reloadData()
-                                                print(self.dateDic)
                                             }
                                         }
                                     }

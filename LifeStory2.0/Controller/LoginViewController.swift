@@ -19,6 +19,9 @@ class LoginViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        emailTextfield.text = ""
+        passwordTextfield.text = ""
+        
         Auth.auth().addStateDidChangeListener { (auth, user) in
             if user != nil {
                 self.performSegue(withIdentifier: "goToLifeStory", sender: nil)
