@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import FirebaseAuth
+//import FirebaseAuth
 import SVProgressHUD
 
 class AddAccountViewController: UIViewController {
@@ -54,18 +54,18 @@ class AddAccountViewController: UIViewController {
         upload()
     }
     func upload() {
-        
         if let money = Int(self.moneyTextField.text!),
             let selectType = selectType,
             let selectTypeDetail = selectTypeDetail,
             selectTypeDetail.isEmpty == false,
             let index = index,
-            let userID = Auth.auth().currentUser?.email{
+            let userID = Auth.auth().currentUser?.email,
+            let uid = Auth.auth().currentUser?.uid{
             
             SVProgressHUD.show()
+            
             let db = Firestore.firestore()
             let documentID = String(Date().timeIntervalSince1970) + userID
-            
             let data: [String: Any] = ["userID": userID,
                                        "documentID": documentID,
                                        "index": index,
@@ -78,12 +78,15 @@ class AddAccountViewController: UIViewController {
                     print(error)
                 }
             }
+            
+            
+            
             let statusData: [String: Any] = ["date": selectDate,
                                              "documentID": selectDateText]
             db.collection("LifeStory").document(userID).collection("accounting").document(selectDateText).setData(statusData)
+            
             SVProgressHUD.dismiss()
             dismiss(animated: true, completion: nil)
-            
         }
         else{
             let alert = UIAlertController(title: "請填寫正確", message: "", preferredStyle: .alert)

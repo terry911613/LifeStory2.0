@@ -46,7 +46,7 @@ class DiaryViewController: UIViewController {
                         let coEditStatus = userData["coEditStatus"] as? String,
                         coEditStatus == "共同編輯中"{
                         
-                        db.collection("LifeStory").document(userID).collection("diaries").addSnapshotListener({ (userDiaries, error) in
+                        db.collection("LifeStory").document(userID).collection("diaries").order(by: "date", descending: true).addSnapshotListener({ (userDiaries, error) in
                             if let userDiaries = userDiaries{
                                 if userDiaries.documents.isEmpty{
                                     self.allDiaries.removeAll()
@@ -79,7 +79,7 @@ class DiaryViewController: UIViewController {
                                 }
                             }
                         })
-                        db.collection("LifeStory").document(coEditID).collection("diaries").addSnapshotListener({ (coEditDiaries, error) in
+                        db.collection("LifeStory").document(coEditID).collection("diaries").order(by: "date", descending: true).addSnapshotListener({ (coEditDiaries, error) in
                             if let coEditDiaries = coEditDiaries{
                                 if coEditDiaries.documents.isEmpty{
                                     self.allDiaries.removeAll()
@@ -116,7 +116,7 @@ class DiaryViewController: UIViewController {
                         
                     }
                     else{
-                        db.collection("LifeStory").document(userID).collection("diaries").order(by: "date", descending: false).addSnapshotListener { (diaries, error) in
+                        db.collection("LifeStory").document(userID).collection("diaries").order(by: "date", descending: true).addSnapshotListener { (diaries, error) in
                             
                             if let diaries = diaries {
                                 if diaries.documents.isEmpty{

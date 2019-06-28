@@ -31,7 +31,7 @@ class CoEditViewController: UIViewController {
             let userID = Auth.auth().currentUser?.email{
             let data: [String: Any] = ["coEditID": coEditID,
                                        "coEditStatus": "已送出"]
-            db.collection("LifeStory").document(userID).updateData(data)
+            db.collection("LifeStory").document(userID).setData(data, merge: true)
             
             let data2: [String: Any] = ["coEditID": userID,
                                         "coEditStatus": "請審核"]

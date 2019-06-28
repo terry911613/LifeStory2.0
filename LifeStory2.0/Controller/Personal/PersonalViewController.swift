@@ -8,18 +8,40 @@
 
 import UIKit
 import Firebase
-import FirebaseAuth
+import Kingfisher
 
 class PersonalViewController: UIViewController {
     
+    @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var personalTableView: UITableView!
     
-    var personalArray = ["送出共同編輯", "查看共同編輯請求", "修改個人資料"]
+    var personalArray = ["送出共同編輯", "查看共同編輯請求", "編輯個人資訊"]
+    var name: String?
+    var image: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let db = Firestore.firestore()
+        if let userID = Auth.auth().currentUser?.email{
+            db.collection("LifeStory").document(userID).addSnapshotListener { (user, error) in
+                
+                if let userData = user?.data(){
+                    if let userName = userData["userName"] as? String,
+                        let userImage = userData["userImage"] as? String{
+                        
+                        self.name = userName
+                        self.image = userImage
+                        
+                        self.userNameLabel.text = userName
+                        self.userImageView.kf.setImage(with: URL(string: userImage))
+                    }
+                }
+            }
+        }
     }
+    
     
     @IBAction func logOutButton(_ sender: UIBarButtonItem) {
         do{
@@ -31,6 +53,20 @@ class PersonalViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editPeraonalSegue"{
+            let editVC = segue.destination as! EditPersonalViewController
+            if let name = name,
+                let image = image{
+                editVC.name = name
+                editVC.imageUrl = image
+            }
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 }
 
 extension PersonalViewController: UITableViewDelegate, UITableViewDataSource{
@@ -56,3 +92,5 @@ extension PersonalViewController: UITableViewDelegate, UITableViewDataSource{
         }
     }
 }
+
+

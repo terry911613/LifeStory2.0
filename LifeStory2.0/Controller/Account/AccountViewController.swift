@@ -145,6 +145,7 @@ class AccountViewController: UIViewController {
                             }
                         }
                     }
+                        
                     else{
                         db.collection("LifeStory").document(userID).collection("accounting").document(date).collection("detail").order(by: "date", descending: true).addSnapshotListener { (userAccounting, error) in
                             if let userAccounting = userAccounting {
@@ -244,7 +245,6 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "accountingCell", for: indexPath) as! AccountingTableViewCell
         let accounting = allAccounting[indexPath.row]
-        print(allAccounting.count)
         if let money = accounting.data()["money"] as? String{
             if accounting.data()["type"] as? String == "expenditure"{
                 cell.moneyLabel.text = "-$\(money)"
@@ -260,6 +260,7 @@ extension AccountViewController: UITableViewDelegate, UITableViewDataSource{
         
         return cell
     }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete{

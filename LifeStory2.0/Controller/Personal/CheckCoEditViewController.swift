@@ -69,8 +69,8 @@ class CheckCoEditViewController: UIViewController {
         emailLabel.text = ""
         statusLabel.text = ""
         statusLabel.isHidden = true
-        confirmButton.isHidden = false
-        denyButton.isHidden = false
+        confirmButton.isHidden = true
+        denyButton.isHidden = true
         status = nil
         
         let db = Firestore.firestore()
@@ -83,11 +83,14 @@ class CheckCoEditViewController: UIViewController {
                         if coEditStatus == "請審核"{
                             self.emailLabel.text = coEditID
                             self.statusLabel.text = coEditStatus
+                            self.confirmButton.isHidden = false
+                            self.denyButton.isHidden = false
                             self.status = coEditStatus
                         }
                         else if coEditStatus == "共同編輯中"{
                             self.emailLabel.text = "與\(coEditID)"
                             self.statusLabel.text = coEditStatus
+                            self.statusLabel.isHidden = false
                             self.confirmButton.isHidden = true
                             self.denyButton.isHidden = true
                             self.status = coEditStatus
@@ -100,6 +103,8 @@ class CheckCoEditViewController: UIViewController {
                     }
                     else{
                         self.emailLabel.text = "未收到任何請求"
+                        self.confirmButton.isHidden = true
+                        self.denyButton.isHidden = true
                     }
                 }
             }

@@ -22,10 +22,10 @@
 		4478781F22995C43008041A2 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478781E22995C43008041A2 /* RegisterViewController.swift */; };
 		44B1EA6622981F88004E5587 /* AddWishListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B1EA6522981F88004E5587 /* AddWishListViewController.swift */; };
 		44B1EA6922982065004E5587 /* StatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B1EA6822982065004E5587 /* StatusCollectionViewCell.swift */; };
+		44B2CC1F22C5F4AA0097A7C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44B2CC1E22C5F4AA0097A7C0 /* Assets.xcassets */; };
 		44D9C7B02296500800F2C617 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7AF2296500800F2C617 /* AppDelegate.swift */; };
 		44D9C7B22296500800F2C617 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9C7B12296500800F2C617 /* CalendarViewController.swift */; };
 		44D9C7B52296500800F2C617 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7B32296500800F2C617 /* Main.storyboard */; };
-		44D9C7B72296500A00F2C617 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7B62296500A00F2C617 /* Assets.xcassets */; };
 		44D9C7BA2296500A00F2C617 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7B82296500A00F2C617 /* LaunchScreen.storyboard */; };
 		44D9C7C4229650E600F2C617 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C3229650E600F2C617 /* Calendar.storyboard */; };
 		44D9C7C62296510700F2C617 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44D9C7C52296510700F2C617 /* Account.storyboard */; };
@@ -62,11 +62,11 @@
 		4478781E22995C43008041A2 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		44B1EA6522981F88004E5587 /* AddWishListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWishListViewController.swift; sourceTree = "<group>"; };
 		44B1EA6822982065004E5587 /* StatusCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusCollectionViewCell.swift; sourceTree = "<group>"; };
+		44B2CC1E22C5F4AA0097A7C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		44D9C7AC2296500800F2C617 /* LifeStory2.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeStory2.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44D9C7AF2296500800F2C617 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44D9C7B12296500800F2C617 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		44D9C7B42296500800F2C617 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		44D9C7B62296500A00F2C617 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		44D9C7B92296500A00F2C617 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		44D9C7BB2296500A00F2C617 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44D9C7C3229650E600F2C617 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
@@ -201,8 +201,8 @@
 				44D9C7C2229650A600F2C617 /* Controller */,
 				44D9C7DD229697DB00F2C617 /* StickyCollectionViewFlowLayout.swift */,
 				44E9F1A322A17F3400A01FEA /* DeleteCollectionCellDelegate.swift */,
-				44D9C7B62296500A00F2C617 /* Assets.xcassets */,
 				44D9C7B82296500A00F2C617 /* LaunchScreen.storyboard */,
+				44B2CC1E22C5F4AA0097A7C0 /* Assets.xcassets */,
 				44D9C7BB2296500A00F2C617 /* Info.plist */,
 				4402144A22A39C760071324E /* GoogleService-Info.plist */,
 			);
@@ -336,10 +336,10 @@
 				44D9C7C62296510700F2C617 /* Account.storyboard in Resources */,
 				4402144B22A39C760071324E /* GoogleService-Info.plist in Resources */,
 				44D9C7BA2296500A00F2C617 /* LaunchScreen.storyboard in Resources */,
-				44D9C7B72296500A00F2C617 /* Assets.xcassets in Resources */,
 				44D9C7B52296500800F2C617 /* Main.storyboard in Resources */,
 				44D9C7C82296511100F2C617 /* WishList.storyboard in Resources */,
 				44D9C7CC2296512B00F2C617 /* Personal.storyboard in Resources */,
+				44B2CC1F22C5F4AA0097A7C0 /* Assets.xcassets in Resources */,
 				44D9C7CA2296511D00F2C617 /* Diary.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
